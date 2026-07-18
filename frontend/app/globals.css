@@ -61,34 +61,24 @@
     --spacing-content-max-width: 1200px;
     --spacing-gutter: 2rem;
 
-    --font-display-xl: var(--font-inter), sans-serif;
-    --font-display-xl-mobile: var(--font-inter), sans-serif;
-    --font-headline-lg: var(--font-inter), sans-serif;
-    --font-headline-lg-mobile: var(--font-inter), sans-serif;
-    --font-label-caps: var(--font-inter), sans-serif;
-    --font-label-mono: var(--font-jetbrains-mono), monospace;
-    --font-body-lg: var(--font-inter), sans-serif;
-    --font-body-md: var(--font-inter), sans-serif;
+    --font-display-xl: var(--font-merriwether), serif;
+    --font-display-xl-mobile: var(--font-merriwether), serif;
+    --font-headline-lg: var(--font-merriwether), serif;
+    --font-headline-lg-mobile: var(--font-merriwether), serif;
+    --font-label-caps: var(--font-merriwether), serif;
+    --font-label-mono: var(--font-merriwether), serif;
+    --font-body-lg: var(--font-merriwether), serif;
+    --font-body-md: var(--font-merriwether), serif;
 
-    --text-display-xl: 120px;
-    --text-display-xl--line-height: 110px;
+    --text-display-xl: clamp(3rem, 10vw, 7.5rem);
+    --text-display-xl--line-height: 1.1;
     --text-display-xl--letter-spacing: -0.04em;
     --text-display-xl--font-weight: 800;
 
-    --text-display-xl-mobile: 48px;
-    --text-display-xl-mobile--line-height: 52px;
-    --text-display-xl-mobile--letter-spacing: -0.02em;
-    --text-display-xl-mobile--font-weight: 800;
-
-    --text-headline-lg: 64px;
-    --text-headline-lg--line-height: 72px;
+    --text-headline-lg: clamp(2.5rem, 8vw, 5.5rem);
+    --text-headline-lg--line-height: 1.1;
     --text-headline-lg--letter-spacing: -0.02em;
     --text-headline-lg--font-weight: 600;
-
-    --text-headline-lg-mobile: 32px;
-    --text-headline-lg-mobile--line-height: 38px;
-    --text-headline-lg-mobile--letter-spacing: -0.01em;
-    --text-headline-lg-mobile--font-weight: 600;
 
     --text-label-caps: 11px;
     --text-label-caps--line-height: 12px;
@@ -192,7 +182,7 @@
 .terminal-overlay {
     position: absolute;
     opacity: 0.05;
-    font-family: var(--font-jetbrains-mono), monospace;
+    font-family: var(--font-merriwether), serif;
     color: #39d353;
     pointer-events: none;
     z-index: 5;

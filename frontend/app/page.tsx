@@ -1,13 +1,30 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+
+const act1Slides = [
+  { type: 'image', src: '/ME.jpg', text: '...a Traveler & Explorer' },
+  { type: 'image', src: '/Work.jpg', text: '...a Developer who loves GitHub & Teamwork' },
+  { type: 'image', src: '/Belief_Books.jpg', text: '...a Reader of Books, Old & New.' },
+  { type: 'image', src: '/Boyz.jpg', text: '...someone who believes friendship is everything.' },
+  { type: 'video', src: '/IMG_9265.mov', text: '...a Videographer' },
+  { type: 'video', src: '/Window.mov', text: '...and I believe every tool has its purpose.' },
+];
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const githubGridRef = useRef<HTMLDivElement>(null);
+  const [currentAct1Slide, setCurrentAct1Slide] = useState(0);
+
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentAct1Slide((prev) => (prev + 1) % act1Slides.length);
+    }, 3500);
+    return () => clearInterval(slideInterval);
+  }, []);
 
   useEffect(() => {
     // Register GSAP plugins
@@ -195,15 +212,43 @@ export default function Home() {
         className="relative w-full h-[100vh] flex flex-col justify-center items-center overflow-hidden"
         id="act-1"
       >
-        <div className="absolute inset-0 z-0 opacity-50"></div>
-        <div className="relative z-10 w-full max-w-content-max-width mx-auto px-gutter text-center flex flex-col items-center justify-center gap-narrative-gap">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-black">
+          {act1Slides.map((slide, index) => (
+            <div
+              key={slide.src}
+              className={`absolute inset-0 transition-opacity duration-1000 ${index === currentAct1Slide ? "opacity-50" : "opacity-0"
+                }`}
+            >
+              {slide.type === 'image' ? (
+                <img src={slide.src} alt="Background slide" className="w-full h-full object-cover" />
+              ) : (
+                <video src={slide.src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Backdrop for text to ensure readability */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none mix-blend-multiply"></div>
+
+        <div className="relative z-10 w-full max-w-content-max-width mx-auto px-gutter text-center flex flex-col items-center justify-center gap-narrative-gap drop-shadow-2xl h-full mt-12">
           <h1
-            className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary act-1-text font-label-mono terminal-type"
-            data-text="> sudo init curiosity"
+            className="font-display-xl text-display-xl text-primary act-1-text font-label-mono terminal-type -translate-y-12 md:-translate-y-20"
+            data-text="Hello, I am Bibesh"
           ></h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant act-1-text max-w-2xl font-label-mono text-label-mono uppercase tracking-widest mt-8">
-            To understand the whole, you must dismantle the parts.
-          </p>
+          <div className="relative w-full max-w-2xl mt-8 h-[140px] md:h-[100px] flex items-center justify-center mx-auto act-1-text">
+            {act1Slides.map((slide, index) => (
+              <p
+                key={index}
+                className={`absolute inset-0 font-body-lg text-body-lg text-on-surface-variant font-label-mono text-label-mono uppercase tracking-widest flex items-center justify-center transition-opacity duration-1000 ${index === currentAct1Slide ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                  }`}
+              >
+                <span className="bg-black/60 md:bg-black/40 p-4 md:p-6 rounded-lg backdrop-blur-md border border-warm-umber/20">
+                  {slide.text}
+                </span>
+              </p>
+            ))}
+          </div>
         </div>
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce opacity-50">
           <span className="font-label-mono text-label-mono text-on-surface-variant tracking-widest uppercase text-[10px]">
@@ -246,7 +291,7 @@ export default function Home() {
           {/* Left Content */}
           <div className="col-span-4 md:col-span-4 flex flex-col gap-8 order-2 md:order-1 act-2-content">
             <h2
-              className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-sandstone font-label-mono text-[32px] terminal-type-act2"
+              className="font-headline-lg text-headline-lg text-sandstone font-label-mono terminal-type-act2"
               data-text="Growth requires absolute stillness."
             ></h2>
             <div className="w-full h-px bg-warm-umber my-4"></div>
