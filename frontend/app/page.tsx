@@ -24,7 +24,6 @@ export default function Home() {
     { title: "12 Rules for Life", img: "./Books/12 rules for life.png" },
     { title: "A Song of Ice and Fire", img: "./Books/Song of ice and fire.webp" },
     { title: "The Great Gatsby", img: "./Books/the great gatsby.jpeg" },
-    { title: "The Art of War", img: "./Books/ArtOfWar.jpg" },
     { title: "Diary of a Wimpy Kid", img: "./Books/Diary of the wimpy.jpg" },
     { title: "How to Do Nothing", img: "./Books/Will do nothing.jpg" }
   ];
