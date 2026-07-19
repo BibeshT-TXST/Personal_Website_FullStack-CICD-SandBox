@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 import Image from "next/image";
 
+//Test
 const act1Slides = [
   { type: 'image', src: '/ME.jpg', text: '...a Traveler & Explorer' },
   { type: 'image', src: '/Work.jpg', text: '...a Developer who loves GitHub & Teamwork' },

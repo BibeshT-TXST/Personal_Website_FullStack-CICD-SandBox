@@ -190,13 +190,25 @@
 
 /* Marquee Animations for Act III */
 @keyframes marquee-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Halfway through since content is duplicated */
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+
+    /* Halfway through since content is duplicated */
 }
 
 @keyframes marquee-right {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .animate-marquee-left {
@@ -208,10 +220,21 @@
 }
 
 /* Different speeds for different rows */
-.marquee-speed-1 { animation-duration: 35s; }
-.marquee-speed-2 { animation-duration: 45s; }
-.marquee-speed-3 { animation-duration: 40s; }
-.marquee-speed-4 { animation-duration: 50s; }
+.marquee-speed-1 {
+    animation-duration: 35s;
+}
+
+.marquee-speed-2 {
+    animation-duration: 45s;
+}
+
+.marquee-speed-3 {
+    animation-duration: 40s;
+}
+
+.marquee-speed-4 {
+    animation-duration: 50s;
+}
 
 /* Pause on hover */
 .marquee-container:hover .animate-marquee-left,
