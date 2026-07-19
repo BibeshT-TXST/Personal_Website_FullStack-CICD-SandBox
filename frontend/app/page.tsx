@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TextPlugin } from "gsap/TextPlugin";
+import Image from "next/image";
 
 const act1Slides = [
   { type: 'image', src: '/ME.jpg', text: '...a Traveler & Explorer' },
@@ -11,8 +14,6 @@ const act1Slides = [
   { type: 'video', src: '/IMG_9265.mov', text: '...a Videographer' },
   { type: 'video', src: '/Window.mov', text: '...and I believe every tool has its purpose.' },
 ];
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TextPlugin } from "gsap/TextPlugin";
 
 export default function Home() {
   const books = [
@@ -200,7 +201,9 @@ export default function Home() {
                 }`}
             >
               {slide.type === 'image' ? (
-                <img src={slide.src} alt="Background slide" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 w-full h-full">
+                  <Image src={slide.src} alt="Background slide" fill className="object-cover" />
+                </div>
               ) : (
                 <video src={slide.src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
               )}
@@ -413,7 +416,7 @@ export default function Home() {
               <div key={`books-${i}`} className="flex gap-6 px-3 min-w-max">
                 {books.map((book, idx) => (
                   <div key={`book-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer">
-                    <img src={book.img} alt={book.title} className="w-full h-full object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
+                    <Image src={book.img} alt={book.title} fill sizes="192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
                     <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm">
                       <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{book.title}</span>
                     </div>
@@ -429,8 +432,8 @@ export default function Home() {
               <div key={`games-movies-${i}`} className="flex gap-6 px-3 min-w-max">
                 {[...games, ...movies].map((item, idx) => (
                   <div key={`item-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer">
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
-                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm">
+                    <Image src={item.img} alt={item.title} fill sizes="192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
+                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm z-20">
                       <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{item.title}</span>
                     </div>
                   </div>
