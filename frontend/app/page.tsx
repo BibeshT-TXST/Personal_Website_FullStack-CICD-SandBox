@@ -16,7 +16,6 @@ import { TextPlugin } from "gsap/TextPlugin";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const githubGridRef = useRef<HTMLDivElement>(null);
   const [currentAct1Slide, setCurrentAct1Slide] = useState(0);
 
   useEffect(() => {
@@ -67,11 +66,11 @@ export default function Home() {
       }
     );
 
-    // Act 2 Animations
+    // Act 2 Animations (Bento Box fade-in)
     const act2Tl = gsap.timeline({
       scrollTrigger: {
         trigger: "#act-2",
-        start: "top 60%",
+        start: "top 70%",
         end: "bottom 20%",
         toggleActions: "play none none reverse",
       },
@@ -87,15 +86,9 @@ export default function Home() {
           onComplete: () => act2Title.classList.add("cursor-blink"),
         })
         .fromTo(
-          ".act-2-content > :not(.terminal-type-act2)",
-          { opacity: 0, x: -50 },
-          { opacity: 1, x: 0, duration: 1, stagger: 0.2, ease: "power2.out" }
-        )
-        .fromTo(
-          ".act-2-visual",
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 1.5, ease: "power2.out" },
-          "-=1"
+          ".bento-box",
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" }
         );
     }
 
@@ -116,48 +109,6 @@ export default function Home() {
         ease: "power2.out",
       }
     );
-
-    // Generate GitHub Grid Squares
-    if (githubGridRef.current && githubGridRef.current.children.length === 0) {
-      const numSquares = 40;
-      for (let i = 0; i < numSquares; i++) {
-        const square = document.createElement("div");
-        square.className = "github-square absolute";
-
-        // Random positioning around the center Buddha
-        const radius = 100 + Math.random() * 150;
-        const angle = Math.random() * Math.PI * 2;
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
-
-        square.style.left = `calc(50% + ${x}px)`;
-        square.style.top = `calc(50% + ${y}px)`;
-
-        // Randomly vary color slightly (greens)
-        const opacities = ["0.4", "0.6", "0.8", "1"];
-        square.style.backgroundColor = `rgba(57, 211, 83, ${opacities[Math.floor(Math.random() * opacities.length)]
-          })`;
-
-        githubGridRef.current.appendChild(square);
-      }
-    }
-
-    // Animate GitHub Squares locking in
-    gsap.to(".github-square", {
-      scrollTrigger: {
-        trigger: "#act-2",
-        start: "top center",
-        end: "center center",
-        scrub: 1,
-      },
-      y: 0,
-      opacity: 1,
-      stagger: {
-        amount: 1,
-        from: "random",
-      },
-      ease: "power1.inOut",
-    });
 
     // Act 3 Body Background Wipe & Elements
     gsap.to(document.body, {
@@ -258,87 +209,156 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Act II: The Discipline */}
+      {/* Act II: Experience & Projects (Bento Box) */}
       <section
         className="relative w-full min-h-[100vh] flex flex-col justify-center py-section-v-padding overflow-hidden z-20"
         id="act-2"
       >
-        {/* Technical Overlay Background */}
-        <div className="terminal-overlay top-20 left-10 hidden md:block">
-          {`import sys\ndef modular_rhythm():\n    while True:\n        commit(code)\n        optimize(mind)\n        recover()`}
-        </div>
-        <div className="terminal-overlay bottom-20 right-10 hidden md:block text-right">
-          {`const stack = new Set();\nstack.add('C++');\nstack.add('Python');\nstack.add('JavaScript');\nstack.add('SQL');`}
-        </div>
-
-        {/* Structural Outlines / Blueprint feel */}
-        <div className="absolute inset-0 pointer-events-none grid grid-cols-4 md:grid-cols-12 gap-gutter px-gutter max-w-content-max-width mx-auto opacity-10">
-          <div className="col-span-1 border-r border-warm-umber h-full"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-          <div className="col-span-1 border-r border-warm-umber h-full hidden md:block"></div>
-        </div>
-
-        <div className="w-full max-w-content-max-width mx-auto px-gutter grid grid-cols-4 md:grid-cols-12 gap-gutter items-center relative z-10">
-          {/* Left Content */}
-          <div className="col-span-4 md:col-span-4 flex flex-col gap-8 order-2 md:order-1 act-2-content">
+        <div className="w-full max-w-content-max-width mx-auto px-gutter relative z-10">
+          <div className="mb-12">
             <h2
-              className="font-headline-lg text-headline-lg text-sandstone font-label-mono terminal-type-act2"
-              data-text="Growth requires absolute stillness."
+              className="font-headline-lg text-headline-lg text-deep-espresso font-label-mono terminal-type-act2 inline-block"
+              data-text="As A Student & Software Developer I Have Done..."
             ></h2>
-            <div className="w-full h-px bg-warm-umber my-4"></div>
-            <p className="font-label-mono text-label-mono text-on-secondary-container leading-relaxed">
-              One atomic commit.<br />
-              One heavy evening repetition.<br />
-              One clean, plant-based recovery.<br />
-              Progress is a daily, modular rhythm.
-            </p>
-            <div className="mt-8 border border-warm-umber p-4 bg-black/30">
-              <h3 className="font-label-mono text-sandstone text-sm mb-4 border-b border-warm-umber/50 pb-2">
-                {"> dev_stack.env"}
-              </h3>
-              <ul className="font-label-mono text-label-mono text-on-secondary-container space-y-2">
-                <li>
-                  <span className="text-secondary">LANGS=</span>[Python, JavaScript, C++, SQL]
-                </li>
-                <li>
-                  <span className="text-secondary">TOOLS=</span>[Docker, Git, Linux, Vim]
-                </li>
-                <li>
-                  <span className="text-secondary">STATE=</span>Continuous_Integration
-                </li>
-              </ul>
-            </div>
+            <div className="w-full max-w-sm h-px bg-pitch-black/30 my-4"></div>
           </div>
 
-          {/* Center Visual (Buddha & Grid) */}
-          <div className="col-span-4 md:col-span-4 relative flex justify-center items-center order-1 md:order-2 h-[60vh] md:h-auto my-12 md:my-0 act-2-visual">
-            <div className="absolute inset-0 bg-deep-espresso blur-[40px] z-0 rounded-full scale-150 opacity-50"></div>
-            <div className="relative z-10 p-2 border border-warm-umber bg-deep-espresso">
-              <img
-                alt="Buddha Statue"
-                className="w-full max-w-[280px] object-cover mix-blend-luminosity opacity-80 filter contrast-125"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKMajJYx845Kf6fKE4U9y-h4SWYB75gTynR_1gWuzOexyQ7MW2MMjhddXeLBewBesf5-XnuaY4Os_JPRJrURPMK8jWJfixYBGwQjEwBKqBqKNu3hb6T12IwezwpNSkrHI0o31EJnF5LTYzTpUaULhcgG5eYEKPN_YsdNmG9qUvXwIQpnkTjTw3yyGHVnloLpkCMNMpCy03PyqHQQUIhO_9p_WLdLq-ddygl-wYN7B9RJVuBt5dffx-"
-              />
-            </div>
-            {/* Cascading GitHub Squares */}
-            <div
-              className="absolute inset-0 z-20 flex justify-center items-center pointer-events-none mix-blend-screen"
-              id="github-grid"
-              ref={githubGridRef}
-            ></div>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+            {/* Left Side: Work Experience */}
+            <div className="flex flex-col gap-6">
+              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4">Work</h3>
 
-          {/* Right Empty Space */}
-          <div className="col-span-4 md:col-span-4 hidden md:block order-3"></div>
+              {/* Bento Box 1 */}
+              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
+                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
+                  <div className="flex justify-between items-start gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black">Full-Stack Dev, Student Worker</h4>
+                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2025 - Present</span>
+                  </div>
+                  <p className="font-label-mono text-sm text-deep-espresso mb-4">Texas State University Libraries</p>
+
+                  {/* Expanded details */}
+                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
+                        <li>Built and shipped a production Next.js asset management web application, replacing a legacy .exe application and manual logs, saving ~13 hrs/week across 7 staff managing 500+ devices.</li>
+                        <li>Built a JWT cookie-based authentication system with a custom Next.js proxy, Argon2 client-side hashing, and session guards across 4 route groups.</li>
+                        <li>Built a 14-column MUI DataGrid with inline row editing, debounced search, and batch edit/cancel.</li>
+                        <li>Co-designed a SQL guardrail patching a live production data-integrity vulnerability in a Flask backend.</li>
+                        <li>Co-deployed the application to a Red Hat Enterprise Linux server via a custom GitHub Actions CI/CD pipeline.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bento Box 2 */}
+              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
+                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
+                  <div className="flex justify-between items-start gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black">QA Automation Intern</h4>
+                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2024 - Apr 2025</span>
+                  </div>
+                  <p className="font-label-mono text-sm text-deep-espresso mb-4">MySQUEGG</p>
+
+                  {/* Expanded details */}
+                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
+                        <li>Built 12 unit tests using JavaScript, WebDriverIO, and Appium server; used Android Studio to validate UI functionality, identifying 31 bugs across 2 mobile applications.</li>
+                        <li>Flagged 37 missing accessibility identifiers through automated testing.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bento Box 3 */}
+              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
+                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
+                  <div className="flex justify-between items-start gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black">STEM Research Coach</h4>
+                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2024 - Dec 2025</span>
+                  </div>
+                  <p className="font-label-mono text-sm text-deep-espresso mb-4">Texas State University Libraries</p>
+
+                  {/* Expanded details */}
+                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
+                        <li>Coached 700+ undergraduate students on research techniques and finding relevant research papers.</li>
+                        <li>Co-developed a structured Research Coach FAQ with 3 colleagues using Texas State University's CMS.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Side: Projects */}
+            <div className="flex flex-col gap-6 mt-8 lg:mt-0">
+              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4">Projects</h3>
+
+              {/* Project Bento Box 1 */}
+              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
+                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
+                  <div className="flex justify-between items-start gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black">SightX: Diabetic Retinopathy Detection System</h4>
+                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2026 - Present</span>
+                  </div>
+                  <div className="font-label-mono text-sm text-deep-espresso mb-4 flex flex-col gap-2">
+                    <p>Computer Vision, Machine Learning, Fullstack & Cloud</p>
+                    <div className="flex gap-3 mt-1">
+                      <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded hover:bg-[#238636] hover:text-white transition-colors duration-300 text-xs tracking-wider">GitHub</a>
+                      <a href="https://darkmatterstech.blogspot.com/" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-warm-umber text-sandstone font-bold rounded hover:bg-[#B32821] hover:text-white transition-colors duration-300 text-xs tracking-wider">Blog</a>
+                    </div>
+                  </div>
+
+                  {/* Expanded details */}
+                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
+                        <li>Trained a ResNet-50 V2 diabetic retinopathy classifier on 35K retinal images, achieving κ = 0.6454 on a personal MacBook (no cloud compute) using CLAHE preprocessing.</li>
+                        <li>Built a post-processing safety pipeline using temperature scaling, Bayesian prior correction, and an asymmetric cost matrix converting raw model logits into 3 actionable triage tiers.</li>
+                        <li>Built a 108-iteration test-time augmentation ensemble running stochastic transforms per inference pass for robustness to camera artifacts.</li>
+                        <li>Built and shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with JWT + row-level security via Supabase, deployed to Red Hat Linux.</li>
+                        <li>Documented the entire system in a comprehensive blog, showcasing SightX as an educational sandbox with full architectural documentation.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Bento Box 2 */}
+              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
+                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
+                  <div className="flex justify-between items-start gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black">Personal Website Sandbox</h4>
+                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">2026 - Present</span>
+                  </div>
+                  <div className="font-label-mono text-sm text-deep-espresso mb-4 flex flex-col gap-2">
+                    <p>Frontend & CI/CD Sandbox</p>
+                    <div className="flex gap-3 mt-1">
+                      <a href="https://github.com/BibeshT-TXST/Personal_Website_FullStack-CICD-SandBox" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded hover:bg-[#238636] hover:text-white transition-colors duration-300 text-xs tracking-wider w-max">GitHub</a>
+                    </div>
+                  </div>
+
+                  {/* Expanded details */}
+                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
+                        <li>Developing a digital portfolio that serves as an active engineering sandbox to experiment with modern frontend architectures.</li>
+                        <li>Exploring advanced UI/UX concepts, including scroll-driven narratives and dynamic grid layouts, to craft a unique and engaging user experience.</li>
+                        <li>Establishing continuous integration and deployment workflows to create a reliable foundation for rapid, ongoing feature iteration.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </section>
 
