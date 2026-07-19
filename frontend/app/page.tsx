@@ -15,6 +15,35 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 
 export default function Home() {
+  const books = [
+    { title: "Bhagavad Gita", img: "/Books/bhagavad-gita.jpg" },
+    { title: "Count of Monte Cristo", img: "/Books/count of montecristo.jpeg" },
+    { title: "White Nights", img: "/Books/WHite_knights.jpeg" },
+    { title: "12 Rules for Life", img: "/Books/12 rules for life.png" },
+    { title: "A Song of Ice and Fire", img: "/Books/Song of ice and fire.webp" },
+    { title: "The Great Gatsby", img: "/Books/the great gatsby.jpeg" },
+    { title: "The Art of War", img: "/Books/ArtOf War.jpg" },
+    { title: "Diary of a Wimpy Kid", img: "/Books/Diary of the wimpy.jpg" },
+    { title: "How to Do Nothing", img: "/Books/Will do nothing.jpg" }
+  ];
+
+  const games = [
+    { title: "GTA Vice City", img: "/Games & Movies/vice city.png" },
+    { title: "Assassin's Creed 2", img: "/Games & Movies/Assassins_Creed_2.jpeg" },
+    { title: "Red Dead Redemption II", img: "/Games & Movies/Red_Dead_Redemption_II.jpg" },
+    { title: "GTA V", img: "/Games & Movies/grove-gang-gta-v.webp" },
+    { title: "Detroit Become Human", img: "/Games & Movies/Detroit_Become_Human_Cover.webp" }
+  ];
+
+  const movies = [
+    { title: "The Dark Knight", img: "/Games & Movies/Dark Knight.jpeg" },
+    { title: "Pirates of the Caribbean", img: "/Games & Movies/At The Words End.jpeg" },
+    { title: "Django Unchained", img: "/Games & Movies/django unchained.jpeg" },
+    { title: "The Shawshank Redemption", img: "/Games & Movies/sawshank_redemption.jpeg" },
+    { title: "Interstellar", img: "/Games & Movies/Interstellar.jpeg" },
+    { title: "The Prestige", img: "/Games & Movies/The prestiage.jpeg" }
+  ];
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentAct1Slide, setCurrentAct1Slide] = useState(0);
 
@@ -362,110 +391,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Machine Room: System Architecture */}
-      <section
-        className="relative w-full min-h-[100vh] flex flex-col justify-center py-section-v-padding z-25 bg-pitch-black border-y border-warm-umber/30"
-        id="machine-room"
-      >
-        <div className="w-full max-w-content-max-width mx-auto px-gutter">
-          <div className="machine-header mb-16">
-            <h2 className="font-label-mono text-sandstone text-[24px] cursor-blink">
-              {"> cd /machine_room/architecture"}
-            </h2>
-            <div className="w-full h-px bg-warm-umber/30 mt-4"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 machine-content">
-            <div>
-              <h3 className="font-headline-lg-mobile text-sandstone mb-6">Complexity Analysis</h3>
-              <p className="font-label-mono text-label-mono text-on-secondary-container leading-relaxed mb-6">
-                Before writing a line of code, the system must be dismantled into its theoretical constraints. Big O is not just for interviews; it dictates the scalable bounds of reality.
-              </p>
-              <div className="bg-deep-espresso border border-warm-umber p-6 font-label-mono text-sm text-sandstone/80">
-                Time Complexity: O(log n)<br />
-                Space Complexity: O(1)<br />
-                Objective: Optimal Resource Allocation
-              </div>
-            </div>
-            <div>
-              <h3 className="font-headline-lg-mobile text-sandstone mb-6">First Principles</h3>
-              <p className="font-label-mono text-label-mono text-on-secondary-container leading-relaxed mb-6">
-                Assuming nothing. Building from the ground up. Whether it's designing a database schema or structuring an API, stripping away the dogma reveals the most efficient path forward.
-              </p>
-              <ul className="font-label-mono text-label-mono text-on-secondary-container space-y-4 list-disc pl-4">
-                <li>Identify the core problem.</li>
-                <li>Break it down to fundamental truths.</li>
-                <li>Construct the solution modularly.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Act III: The Impact */}
       <section
         className="relative w-full min-h-[100vh] flex flex-col py-section-v-padding z-30 transition-colors duration-1000"
         id="act-3"
       >
-        <div className="w-full max-w-content-max-width mx-auto px-gutter mb-24 act-3-header">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-espresso max-w-4xl">
-            Discipline builds the foundation.<br />
-            <span className="text-warm-umber">Empathy builds the impact.</span>
+        <div className="w-full max-w-content-max-width mx-auto px-gutter mb-8 act-3-header">
+          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-sandstone max-w-4xl">
+            But at the end of the day books, movies & video games <span className="text-warm-umber">are my escape</span>
           </h2>
-          <div className="w-24 h-1 bg-deep-espresso mt-8"></div>
+          <div className="w-24 h-1 bg-warm-umber mt-6"></div>
         </div>
 
-        <div className="w-full max-w-content-max-width mx-auto px-gutter grid grid-cols-4 md:grid-cols-12 gap-6 relative z-10">
-          <div className="col-span-4 md:col-span-7 bg-sandstone border border-pitch-black p-8 md:p-12 act-3-card hover:bg-[#d5d0bc] transition-colors duration-500 group cursor-pointer relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 font-label-mono text-label-mono text-warm-umber">01</div>
-            <div className="flex flex-col h-full justify-between gap-12">
-              <div>
-                <h3 className="font-display-xl-mobile md:font-display-xl-mobile text-display-xl-mobile md:text-display-xl-mobile text-pitch-black tracking-tight mb-4">SightX</h3>
-                <p className="font-body-md text-body-md text-on-secondary-fixed-variant mb-4">
-                  Automated market research platform utilizing advanced NLP and statistical analysis to uncover consumer insights instantly.
-                </p>
-                <div className="font-label-mono text-xs text-deep-espresso/80 bg-warm-umber/10 p-3 rounded inline-block">
-                  {"> Performance: 98% accuracy on validation set"}
-                </div>
+        {/* Media Marquees */}
+        <div className="w-full flex flex-col gap-8 overflow-hidden relative z-10 py-8 marquee-container bg-pitch-black border-y border-warm-umber/30">
+
+          {/* Row 1: Books (Scroll Left) */}
+          <div className="flex w-max whitespace-nowrap animate-marquee-left marquee-speed-1">
+            {[...Array(6)].map((_, i) => (
+              <div key={`books-${i}`} className="flex gap-6 px-3 min-w-max">
+                {books.map((book, idx) => (
+                  <div key={`book-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer">
+                    <img src={book.img} alt={book.title} className="w-full h-full object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
+                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm">
+                      <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{book.title}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-center gap-4 font-label-mono text-label-mono text-pitch-black group-hover:translate-x-2 transition-transform duration-300">
-                <span>VIEW ARCHITECTURE</span>
-                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-              </div>
-            </div>
+            ))}
           </div>
 
-          <div className="col-span-4 md:col-span-5 bg-sandstone border border-pitch-black p-8 md:p-12 act-3-card hover:bg-[#d5d0bc] transition-colors duration-500 group cursor-pointer relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 font-label-mono text-label-mono text-warm-umber">02</div>
-            <div className="flex flex-col h-full justify-between gap-12">
-              <div>
-                <h3 className="font-display-xl-mobile md:font-display-xl-mobile text-display-xl-mobile md:text-display-xl-mobile text-pitch-black tracking-tight mb-4">Libraries</h3>
-                <p className="font-body-md text-body-md text-on-secondary-fixed-variant mb-4">
-                  Digital archiving and retrieval systems for extensive university library networks.
-                </p>
-                <div className="font-label-mono text-xs text-deep-espresso/80 bg-warm-umber/10 p-3 rounded inline-block">
-                  {"> Patch: Resolved critical data-integrity vulnerability in legacy indexers"}
-                </div>
+          {/* Row 2: Games & Movies (Scroll Right) */}
+          <div className="flex w-max whitespace-nowrap animate-marquee-right marquee-speed-2">
+            {[...Array(6)].map((_, i) => (
+              <div key={`games-movies-${i}`} className="flex gap-6 px-3 min-w-max">
+                {[...games, ...movies].map((item, idx) => (
+                  <div key={`item-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer">
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
+                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm">
+                      <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{item.title}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-center gap-4 font-label-mono text-label-mono text-pitch-black group-hover:translate-x-2 transition-transform duration-300">
-                <span>VIEW SYSTEM</span>
-                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-              </div>
-            </div>
+            ))}
           </div>
 
-          <div className="col-span-4 md:col-span-12 bg-pitch-black border border-pitch-black p-8 md:p-12 act-3-card hover:bg-surface-dim transition-colors duration-500 group cursor-pointer relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mt-6">
-            <div className="absolute top-0 right-0 p-6 font-label-mono text-label-mono text-warm-umber">03</div>
-            <div className="max-w-2xl">
-              <h3 className="font-display-xl-mobile md:font-display-xl-mobile text-display-xl-mobile md:text-display-xl-mobile text-sandstone tracking-tight mb-4">RescueOps</h3>
-              <p className="font-body-md text-body-md text-outline">
-                Real-time coordination and logistics platform for emergency response and rescue operations.
-              </p>
-            </div>
-            <button className="bg-sandstone text-pitch-black font-label-mono text-label-mono px-8 py-4 rounded-none hover:bg-secondary transition-colors duration-300 flex items-center gap-2">
-              <span>EXPLORE CASE STUDY</span>
-              <span className="material-symbols-outlined text-[16px]">north_east</span>
-            </button>
-          </div>
+
+
+
         </div>
       </section>
 
@@ -473,11 +449,8 @@ export default function Home() {
       <footer className="w-full h-auto py-12 bg-tertiary dark:bg-surface border-t border-outline-variant dark:border-outline relative z-40">
         <div className="flex flex-col md:flex-row justify-between items-center px-gutter max-w-content-max-width mx-auto gap-8">
           <div className="flex flex-col items-center md:items-start gap-2">
-            <span className="font-label-caps text-label-caps text-on-surface dark:text-on-background">
-              © 2024 ARCHITECT OF DISCOVERY
-            </span>
-            <p className="font-body-md text-body-md text-on-surface-variant max-w-sm text-center md:text-left mt-2 font-label-mono">
-              Hi, I'm Bibesh Timalsina.<br />I build systems from first principles.
+            <p className="font-body-md text-body-md text-on-surface-variant max-w-sm text-center md:text-left font-label-mono leading-relaxed">
+              Want more info? Please reach out.
             </p>
           </div>
           <nav className="flex gap-8 font-label-mono text-label-mono">
@@ -499,9 +472,9 @@ export default function Home() {
             </a>
             <a
               className="text-on-tertiary-container dark:text-on-surface-variant hover:translate-x-2 transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2"
-              href="#"
+              href="mailto:timaslinabibesh747@gmail.com"
             >
-              <span>CONTACT</span>
+              <span>GMAIL</span>
             </a>
           </nav>
         </div>
