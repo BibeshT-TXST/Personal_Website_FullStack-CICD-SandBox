@@ -8,42 +8,42 @@ import Image from "next/image";
 
 //Test
 const act1Slides = [
-  { type: 'image', src: '/ME.jpg', text: '...a Traveler & Explorer' },
-  { type: 'image', src: '/Work.jpg', text: '...a Developer who loves GitHub & Teamwork' },
-  { type: 'image', src: '/Belief_Books.jpg', text: '...a Reader of Books, Old & New.' },
-  { type: 'image', src: '/Boyz.jpg', text: '...someone who believes friendship is everything.' },
-  { type: 'video', src: '/IMG_9265.mov', text: '...a Videographer' },
-  { type: 'video', src: '/Window.mov', text: '...and I believe every tool has its purpose.' },
+  { type: 'image', src: './ME.jpg', text: '...a Traveler & Explorer' },
+  { type: 'image', src: './Work.jpg', text: '...a Developer who loves GitHub & Teamwork' },
+  { type: 'image', src: './Belief_Books.jpg', text: '...a Reader of Books, Old & New.' },
+  { type: 'image', src: './Boyz.jpg', text: '...someone who believes friendship is everything.' },
+  { type: 'video', src: './IMG_9265.mov', text: '...a Videographer' },
+  { type: 'video', src: './Window.mov', text: '...and I believe every tool has its purpose.' },
 ];
 
 export default function Home() {
   const books = [
-    { title: "Bhagavad Gita", img: "/Books/bhagavad-gita.jpg" },
-    { title: "Count of Monte Cristo", img: "/Books/count of montecristo.jpeg" },
-    { title: "White Nights", img: "/Books/WHite_knights.jpeg" },
-    { title: "12 Rules for Life", img: "/Books/12 rules for life.png" },
-    { title: "A Song of Ice and Fire", img: "/Books/Song of ice and fire.webp" },
-    { title: "The Great Gatsby", img: "/Books/the great gatsby.jpeg" },
-    { title: "The Art of War", img: "/Books/ArtOf War.jpg" },
-    { title: "Diary of a Wimpy Kid", img: "/Books/Diary of the wimpy.jpg" },
-    { title: "How to Do Nothing", img: "/Books/Will do nothing.jpg" }
+    { title: "Bhagavad Gita", img: "./Books/bhagavad-gita.jpg" },
+    { title: "Count of Monte Cristo", img: "./Books/count of montecristo.jpeg" },
+    { title: "White Nights", img: "./Books/WHite_knights.jpeg" },
+    { title: "12 Rules for Life", img: "./Books/12 rules for life.png" },
+    { title: "A Song of Ice and Fire", img: "./Books/Song of ice and fire.webp" },
+    { title: "The Great Gatsby", img: "./Books/the great gatsby.jpeg" },
+    { title: "The Art of War", img: "./Books/ArtOfWar.jpg" },
+    { title: "Diary of a Wimpy Kid", img: "./Books/Diary of the wimpy.jpg" },
+    { title: "How to Do Nothing", img: "./Books/Will do nothing.jpg" }
   ];
 
   const games = [
-    { title: "GTA Vice City", img: "/Games & Movies/vice city.png" },
-    { title: "Assassin's Creed 2", img: "/Games & Movies/Assassins_Creed_2.jpeg" },
-    { title: "Red Dead Redemption II", img: "/Games & Movies/Red_Dead_Redemption_II.jpg" },
-    { title: "GTA V", img: "/Games & Movies/grove-gang-gta-v.webp" },
-    { title: "Detroit Become Human", img: "/Games & Movies/Detroit_Become_Human_Cover.webp" }
+    { title: "GTA Vice City", img: "./Games & Movies/vice city.png" },
+    { title: "Assassin's Creed 2", img: "./Games & Movies/Assassins_Creed_2.jpeg" },
+    { title: "Red Dead Redemption II", img: "./Games & Movies/Red_Dead_Redemption_II.jpg" },
+    { title: "GTA V", img: "./Games & Movies/grove-gang-gta-v.webp" },
+    { title: "Detroit Become Human", img: "./Games & Movies/Detroit_Become_Human_Cover.webp" }
   ];
 
   const movies = [
-    { title: "The Dark Knight", img: "/Games & Movies/Dark Knight.jpeg" },
-    { title: "Pirates of the Caribbean", img: "/Games & Movies/At The Words End.jpeg" },
-    { title: "Django Unchained", img: "/Games & Movies/django unchained.jpeg" },
-    { title: "The Shawshank Redemption", img: "/Games & Movies/sawshank_redemption.jpeg" },
-    { title: "Interstellar", img: "/Games & Movies/Interstellar.jpeg" },
-    { title: "The Prestige", img: "/Games & Movies/The prestiage.jpeg" }
+    { title: "The Dark Knight", img: "./Games & Movies/Dark Knight.jpeg" },
+    { title: "Pirates of the Caribbean", img: "./Games & Movies/At The Words End.jpeg" },
+    { title: "Django Unchained", img: "./Games & Movies/django unchained.jpeg" },
+    { title: "The Shawshank Redemption", img: "./Games & Movies/sawshank_redemption.jpeg" },
+    { title: "Interstellar", img: "./Games & Movies/Interstellar.jpeg" },
+    { title: "The Prestige", img: "./Games & Movies/The prestiage.jpeg" }
   ];
 
   const containerRef = useRef<HTMLDivElement>(null);
