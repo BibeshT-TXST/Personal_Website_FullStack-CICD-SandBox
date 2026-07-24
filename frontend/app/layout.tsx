@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: "I build systems from first principles.",
 };
 
+import CustomCursor from "@/components/CustomCursor";
+import InteractiveDots from "@/components/InteractiveDots";
+
 export default function RootLayout({
   children,
 }: {
@@ -27,6 +30,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased selection:bg-warm-umber selection:text-sandstone">
+        <div className="film-grain"></div>
+        <CustomCursor />
+        <InteractiveDots />
         {children}
       </body>
     </html>

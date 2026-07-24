@@ -64,18 +64,29 @@ export default function Home() {
     // Register GSAP plugins
     gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
-    // Progress Pip Animation
-    const handleScroll = () => {
-      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = window.scrollY / scrollTotal;
-      const pip = document.getElementById("progress-pip");
-      if (pip) {
-        // Max movement distance based on container height (300) minus pip height (40)
-        const maxTranslate = 300 - 40;
-        pip.style.top = `${scrollPercent * maxTranslate}px`;
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
+    // Act 1 Background Parallax
+    gsap.to(".act-1-bg", {
+      scrollTrigger: {
+        trigger: "#act-1",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      y: 200,
+      ease: "none",
+    });
+
+    // Fade out Descend arrow on scroll
+    gsap.to(".descend-arrow", {
+      scrollTrigger: {
+        trigger: "#act-1",
+        start: "top top",
+        end: "30% top",
+        scrub: true,
+      },
+      opacity: 0,
+      ease: "none",
+    });
 
     // Act 1 Typing Animation
     const act1Title = document.querySelector(".terminal-type");
@@ -181,24 +192,19 @@ export default function Home() {
       );
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
   return (
     <main className="relative w-full" ref={containerRef}>
-      {/* Vertical Progress Indicator */}
-      <div className="progress-indicator hidden md:block">
-        <div className="progress-pip" id="progress-pip"></div>
-      </div>
 
       {/* Act I: The Explorer */}
       <section
         className="relative w-full h-[100vh] flex flex-col justify-center items-center overflow-hidden"
         id="act-1"
       >
-        <div className="absolute inset-0 z-0 overflow-hidden bg-black">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-black act-1-bg">
           {act1Slides.map((slide, index) => (
             <div
               key={slide.src}
@@ -238,7 +244,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce opacity-50">
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce opacity-50 descend-arrow">
           <span className="font-label-mono text-label-mono text-on-surface-variant tracking-widest uppercase text-[10px]">
             Descend
           </span>
@@ -263,7 +269,9 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
             {/* Left Side: Work Experience */}
             <div className="flex flex-col gap-6">
-              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4">Work</h3>
+              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4 flex items-center gap-2">
+                <span className="material-symbols-outlined text-xl">work</span> Work
+              </h3>
 
               {/* Bento Box 1 */}
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
@@ -273,7 +281,7 @@ export default function Home() {
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
                     <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Full-Stack Dev, Student Worker</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2025 - Present</span>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2025 - Present</span>
                   </div>
                   <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">Texas State University Libraries</p>
 
@@ -315,8 +323,8 @@ export default function Home() {
                   onClick={() => toggleBento('work-2')}
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">QA Automation Intern</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2024 - Apr 2025</span>
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">QA Tester, Intern</h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Jun 2024 - Sep 2024</span>
                   </div>
                   <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">MySQUEGG</p>
 
@@ -352,8 +360,8 @@ export default function Home() {
                   onClick={() => toggleBento('work-3')}
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">STEM Research Coach</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2024 - Dec 2025</span>
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Research Consultant</h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2023 - May 2025</span>
                   </div>
                   <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">Texas State University Libraries</p>
 
@@ -372,7 +380,7 @@ export default function Home() {
                     <div>
                       <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
                         <li>Coached 700+ undergraduate students on research techniques and finding relevant research papers.</li>
-                        <li>Co-developed a structured Research Coach FAQ with 3 colleagues using Texas State University's CMS.</li>
+                        <li>Co-developed a structured Research FAQ with 3 colleagues using Texas State University's CMS.</li>
                       </ul>
                     </div>
                   </div>
@@ -386,23 +394,24 @@ export default function Home() {
 
             {/* Right Side: Projects */}
             <div className="flex flex-col gap-6 mt-8 lg:mt-0">
-              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4">Projects</h3>
+              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4 flex items-center gap-2">
+                <span className="material-symbols-outlined text-xl">rocket_launch</span> Projects
+              </h3>
 
               {/* Project Bento Box 1 */}
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
                 <div
                   className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('proj-1')}
+                  onClick={() => toggleBento('project-1')}
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">SightX: Diabetic Retinopathy Detection System</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2026 - Present</span>
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Med-AI-Vision <a href="https://github.com/Bibesh-T/MedAi_Vision" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Feb 2026 - Present</span>
                   </div>
                   <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
                     <p>Computer Vision, Machine Learning, Fullstack & Cloud</p>
                     <div className="flex gap-3 mt-1">
                       <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
-                      <a href="https://darkmatterstech.blogspot.com/" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-warm-umber text-sandstone font-bold rounded active:bg-[#B32821] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>Blog</a>
                     </div>
                   </div>
 
@@ -420,7 +429,7 @@ export default function Home() {
                   </div>
 
                   {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'proj-1' ? 'expanded' : ''}`}>
+                  <div className={`bento-details-mobile ${expandedBento === 'project-1' ? 'expanded' : ''}`}>
                     <div>
                       <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
                         <li>Trained a ResNet-50 V2 diabetic retinopathy classifier on 35K retinal images, achieving κ = 0.6454 on a personal MacBook (no cloud compute) using CLAHE preprocessing.</li>
@@ -431,8 +440,8 @@ export default function Home() {
                       </ul>
                     </div>
                   </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'proj-1' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'proj-1' ? 'Tap to collapse' : 'Tap to expand'}
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-1' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'project-1' ? 'Tap to collapse' : 'Tap to expand'}
                   </div>
                 </div>
               </div>
@@ -441,11 +450,11 @@ export default function Home() {
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
                 <div
                   className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('proj-2')}
+                  onClick={() => toggleBento('project-2')}
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Personal Website Sandbox</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">2026 - Present</span>
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Personal Website <a href="https://github.com/Bibesh-T/Personal_Website_FullStack-CICD" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">2026 - Present</span>
                   </div>
                   <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
                     <p>Frontend & CI/CD Sandbox</p>
@@ -496,11 +505,14 @@ export default function Home() {
           <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-sandstone max-w-4xl act-3-heading">
             But at the end of the day books, movies & video games <span className="text-warm-umber">are my escape</span>
           </h2>
-          <div className="w-16 md:w-24 h-1 bg-warm-umber mt-4 md:mt-6"></div>
+          <div className="w-16 md:w-24 h-1 bg-warm-umber mt-4 md:mt-6 mb-6"></div>
+          <p className="font-label-mono text-sandstone/70 max-w-2xl text-sm leading-relaxed">
+            The narratives, architectures, and worlds within these pieces of media deeply influence how I approach building digital experiences and solving complex problems.
+          </p>
         </div>
 
         {/* Media Marquees */}
-        <div className="w-full flex flex-col gap-8 overflow-hidden relative z-10 py-8 marquee-container bg-pitch-black border-y border-warm-umber/30">
+        <div className="w-full flex flex-col gap-8 overflow-hidden relative z-10 py-8 marquee-container marquee-mask bg-pitch-black border-y border-warm-umber/30">
 
           {/* Row 1: Books (Scroll Left) */}
           <div className="flex w-max whitespace-nowrap animate-marquee-left marquee-speed-1">
