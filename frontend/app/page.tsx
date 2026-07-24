@@ -507,7 +507,7 @@ export default function Home() {
           </h2>
           <div className="w-16 md:w-24 h-1 bg-warm-umber mt-4 md:mt-6 mb-6"></div>
           <p className="font-label-mono text-sandstone/70 max-w-2xl text-sm leading-relaxed">
-            The narratives, architectures, and worlds within these pieces of media deeply influence how I approach building digital experiences and solving complex problems.
+            Honestly, I just love a good story. When I'm not working, you'll usually find me getting way too invested in a video game, trying to finish a book in one sitting, or watching a movie that sticks with me for days. It's just how I unplug and recharge.
           </p>
         </div>
 
