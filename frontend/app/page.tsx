@@ -324,7 +324,7 @@ export default function Home() {
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
                     <h4 className="font-display-sm text-pitch-black text-sm md:text-base">QA Tester, Intern</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2024 - Apri 2024</span>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2024 - April 2025</span>
                   </div>
                   <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">MySQUEGG</p>
 
