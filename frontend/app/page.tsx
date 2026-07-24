@@ -475,7 +475,7 @@ export default function Home() {
                   </div>
 
                   {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'proj-2' ? 'expanded' : ''}`}>
+                  <div className={`bento-details-mobile ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
                     <div>
                       <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
                         <li>Developing a digital portfolio that serves as an active engineering sandbox to experiment with modern frontend architectures.</li>
@@ -484,8 +484,8 @@ export default function Home() {
                       </ul>
                     </div>
                   </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'proj-2' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'proj-2' ? 'Tap to collapse' : 'Tap to expand'}
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'project-2' ? 'Tap to collapse' : 'Tap to expand'}
                   </div>
                 </div>
               </div>
