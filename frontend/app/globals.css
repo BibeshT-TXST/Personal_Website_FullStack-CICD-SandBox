@@ -105,6 +105,82 @@
         color: var(--color-on-surface);
         overflow-x: hidden;
     }
+    
+    /* Custom Cursor Hiding on Desktop */
+    @media (hover: hover) and (pointer: fine) {
+        body {
+            cursor: none;
+        }
+        a, button, input, [role="button"] {
+            cursor: none;
+        }
+    }
+}
+
+/* Film Grain Overlay */
+.film-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 40;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-warm-umber);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, mix-blend-mode 0.3s ease;
+    mix-blend-mode: difference;
+    box-shadow: 0 0 10px rgba(65, 45, 21, 0.4);
+}
+
+.custom-cursor.active {
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-sandstone);
+    mix-blend-mode: normal;
+    opacity: 0.8;
+}
+
+/* Glassmorphism Badges */
+.glass-badge {
+    background: rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Marquee Edge Gradient Mask */
+.marquee-mask {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* Interactive Navigation Dots */
+.nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(225, 220, 201, 0.3); /* Sandstone semi-transparent */
+    transition: all 0.3s ease;
+    cursor: none;
+}
+.nav-dot.active, .nav-dot:hover {
+    background-color: var(--color-sandstone);
+    transform: scale(1.3);
 }
 
 .material-symbols-outlined {
@@ -236,8 +312,223 @@
     animation-duration: 50s;
 }
 
-/* Pause on hover */
-.marquee-container:hover .animate-marquee-left,
-.marquee-container:hover .animate-marquee-right {
-    animation-play-state: paused;
+/* Pause on hover — only on pointer devices */
+@media (hover: hover) {
+    .marquee-container:hover .animate-marquee-left,
+    .marquee-container:hover .animate-marquee-right {
+        animation-play-state: paused;
+    }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE OVERRIDES
+   ============================================ */
+
+/* Mobile & Tablet spacing overrides */
+@media (max-width: 1024px) {
+    :root {
+        --spacing-section-v-padding: 6rem;
+        --spacing-gutter: 1.5rem;
+        --spacing-narrative-gap: 3rem;
+    }
+}
+@media (max-width: 767px) {
+    :root {
+        --spacing-section-v-padding: 4rem;
+        --spacing-gutter: 1rem;
+        --spacing-narrative-gap: 2rem;
+    }
+}
+
+/* --- Bento Box Touch: auto-height, flow layout, tap-to-expand --- */
+@media (hover: none), (max-width: 1024px) {
+    .bento-box {
+        height: auto !important;
+    }
+
+    .bento-box > div {
+        position: relative !important;
+        height: auto !important;
+    }
+
+    /* Accordion transition for tap-to-expand */
+    .bento-details-mobile {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.4s ease-in-out;
+    }
+
+    .bento-details-mobile.expanded {
+        grid-template-rows: 1fr;
+    }
+
+    .bento-details-mobile > div {
+        overflow: hidden;
+    }
+
+    /* Tap indicator */
+    .bento-tap-hint {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        opacity: 0.5;
+        margin-top: 0.5rem;
+        transition: opacity 0.3s;
+    }
+
+    .bento-tap-hint .chevron {
+        display: inline-block;
+        transition: transform 0.3s ease;
+        font-size: 0.75rem;
+    }
+
+    .bento-tap-hint.expanded .chevron {
+        transform: rotate(180deg);
+    }
+}
+
+/* Hide mobile tap elements on desktop */
+@media (hover: hover) and (min-width: 1025px) {
+    .bento-tap-hint,
+    .bento-details-mobile {
+        display: none !important;
+    }
+    .bento-details-desktop {
+        display: grid !important;
+    }
+}
+
+/* Hide desktop hover elements on touch/mobile */
+@media (hover: none), (max-width: 1024px) {
+    .bento-details-desktop {
+        display: none !important;
+    }
+}
+
+/* --- Hover effects: only on pointer devices --- */
+@media (hover: hover) and (pointer: fine) {
+    .bento-hover-effect {
+        transition: all 0.5s;
+    }
+
+    .bento-hover-effect:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+        transform: scale(1.03);
+        background-color: #d5d0bc;
+    }
+}
+
+/* Touch feedback for bento boxes */
+@media (hover: none), (max-width: 1024px) {
+    .bento-hover-effect {
+        transition: all 0.15s ease;
+    }
+
+    .bento-hover-effect:active {
+        transform: scale(0.98);
+        background-color: #d5d0bc;
+    }
+}
+
+/* --- Marquee Mobile & Tablet: smaller cards --- */
+@media (max-width: 1024px) {
+    .marquee-card {
+        width: 10rem !important;
+        height: 15rem !important;
+    }
+
+    .marquee-speed-1 {
+        animation-duration: 25s;
+    }
+
+    .marquee-speed-2 {
+        animation-duration: 30s;
+    }
+}
+@media (max-width: 767px) {
+    .marquee-card {
+        width: 8rem !important;
+        height: 12rem !important;
+    }
+}
+
+/* Always show title on touch marquee cards */
+@media (hover: none), (max-width: 1024px) {
+    .marquee-card .marquee-overlay {
+        opacity: 1 !important;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%) !important;
+        display: flex;
+        align-items: flex-end !important;
+        justify-content: center;
+        padding-bottom: 0.5rem !important;
+    }
+
+    .marquee-card .marquee-overlay span {
+        font-size: 0.6rem !important;
+        line-height: 1.2;
+    }
+}
+
+/* --- Footer Mobile & Tablet: touch feedback --- */
+@media (hover: none), (max-width: 1024px) {
+    .footer-link {
+        transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .footer-link:active {
+        transform: scale(0.95) !important;
+        opacity: 0.7;
+    }
+}
+
+@media (hover: hover) and (min-width: 1025px) {
+    .footer-link:hover {
+        transform: translateX(0.5rem);
+    }
+}
+
+/* --- Act III heading mobile & tablet --- */
+@media (max-width: 1024px) {
+    .act-3-heading {
+        font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+        line-height: 1.3 !important;
+    }
+}
+@media (max-width: 767px) {
+    .act-3-heading {
+        font-size: clamp(1.4rem, 6vw, 2rem) !important;
+    }
+}
+
+/* --- Hero section mobile & tablet --- */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: clamp(2rem, 8vw, 3.5rem) !important;
+        letter-spacing: -0.02em !important;
+    }
+
+    .hero-subtitle-box {
+        height: 120px !important;
+    }
+
+    .hero-subtitle-text {
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+    }
+}
+@media (max-width: 767px) {
+    .hero-title {
+        font-size: clamp(1.6rem, 8vw, 2.5rem) !important;
+    }
+
+    .hero-subtitle-box {
+        height: 100px !important;
+    }
+
+    .hero-subtitle-text {
+        font-size: 0.75rem !important;
+    }
 }
