@@ -47,6 +47,11 @@ export default function Home() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentAct1Slide, setCurrentAct1Slide] = useState(0);
+  const [expandedBento, setExpandedBento] = useState<string | null>(null);
+
+  const toggleBento = (id: string) => {
+    setExpandedBento(prev => prev === id ? null : id);
+  };
 
   useEffect(() => {
     const slideInterval = setInterval(() => {
@@ -216,17 +221,17 @@ export default function Home() {
 
         <div className="relative z-10 w-full max-w-content-max-width mx-auto px-gutter text-center flex flex-col items-center justify-center gap-narrative-gap drop-shadow-2xl h-full mt-12">
           <h1
-            className="font-display-xl text-display-xl text-primary act-1-text font-label-mono terminal-type -translate-y-12 md:-translate-y-20"
+            className="font-display-xl text-display-xl text-primary act-1-text font-label-mono terminal-type -translate-y-12 md:-translate-y-20 hero-title"
             data-text="Hello, I am Bibesh"
           ></h1>
-          <div className="relative w-full max-w-2xl mt-8 h-[140px] md:h-[100px] flex items-center justify-center mx-auto act-1-text">
+          <div className="relative w-full max-w-2xl mt-8 h-[140px] md:h-[100px] flex items-center justify-center mx-auto act-1-text hero-subtitle-box">
             {act1Slides.map((slide, index) => (
               <p
                 key={index}
-                className={`absolute inset-0 font-body-lg text-body-lg text-on-surface-variant font-label-mono text-label-mono uppercase tracking-widest flex items-center justify-center transition-opacity duration-1000 ${index === currentAct1Slide ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                className={`absolute inset-0 font-body-lg text-body-lg text-on-surface-variant font-label-mono text-label-mono uppercase tracking-widest flex items-center justify-center transition-opacity duration-1000 hero-subtitle-text ${index === currentAct1Slide ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                   }`}
               >
-                <span className="bg-black/60 md:bg-black/40 p-4 md:p-6 rounded-lg backdrop-blur-md border border-warm-umber/20">
+                <span className="bg-black/60 md:bg-black/40 p-3 md:p-6 rounded-lg backdrop-blur-md border border-warm-umber/20 text-[0.7rem] md:text-sm">
                   {slide.text}
                 </span>
               </p>
@@ -262,15 +267,18 @@ export default function Home() {
 
               {/* Bento Box 1 */}
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
-                  <div className="flex justify-between items-start gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black">Full-Stack Dev, Student Worker</h4>
-                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2025 - Present</span>
+                <div
+                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
+                  onClick={() => toggleBento('work-1')}
+                >
+                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Full-Stack Dev, Student Worker</h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2025 - Present</span>
                   </div>
-                  <p className="font-label-mono text-sm text-deep-espresso mb-4">Texas State University Libraries</p>
+                  <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">Texas State University Libraries</p>
 
-                  {/* Expanded details */}
-                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                  {/* Desktop: hover-to-expand */}
+                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
                     <div className="overflow-hidden">
                       <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
                         <li>Built and shipped a production Next.js asset management web application, replacing a legacy .exe application and manual logs, saving ~13 hrs/week across 7 staff managing 500+ devices.</li>
@@ -281,20 +289,39 @@ export default function Home() {
                       </ul>
                     </div>
                   </div>
+
+                  {/* Mobile: tap-to-expand */}
+                  <div className={`bento-details-mobile ${expandedBento === 'work-1' ? 'expanded' : ''}`}>
+                    <div>
+                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
+                        <li>Built and shipped a production Next.js asset management web application, replacing a legacy .exe application and manual logs, saving ~13 hrs/week across 7 staff managing 500+ devices.</li>
+                        <li>Built a JWT cookie-based authentication system with a custom Next.js proxy, Argon2 client-side hashing, and session guards across 4 route groups.</li>
+                        <li>Built a 14-column MUI DataGrid with inline row editing, debounced search, and batch edit/cancel.</li>
+                        <li>Co-designed a SQL guardrail patching a live production data-integrity vulnerability in a Flask backend.</li>
+                        <li>Co-deployed the application to a Red Hat Enterprise Linux server via a custom GitHub Actions CI/CD pipeline.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'work-1' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'work-1' ? 'Tap to collapse' : 'Tap to expand'}
+                  </div>
                 </div>
               </div>
 
               {/* Bento Box 2 */}
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
-                  <div className="flex justify-between items-start gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black">QA Automation Intern</h4>
-                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2024 - Apr 2025</span>
+                <div
+                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
+                  onClick={() => toggleBento('work-2')}
+                >
+                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">QA Automation Intern</h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Dec 2024 - Apr 2025</span>
                   </div>
-                  <p className="font-label-mono text-sm text-deep-espresso mb-4">MySQUEGG</p>
+                  <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">MySQUEGG</p>
 
-                  {/* Expanded details */}
-                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                  {/* Desktop: hover-to-expand */}
+                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
                     <div className="overflow-hidden">
                       <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
                         <li>Built 12 unit tests using JavaScript, WebDriverIO, and Appium server; used Android Studio to validate UI functionality, identifying 31 bugs across 2 mobile applications.</li>
@@ -302,26 +329,55 @@ export default function Home() {
                       </ul>
                     </div>
                   </div>
+
+                  {/* Mobile: tap-to-expand */}
+                  <div className={`bento-details-mobile ${expandedBento === 'work-2' ? 'expanded' : ''}`}>
+                    <div>
+                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
+                        <li>Built 12 unit tests using JavaScript, WebDriverIO, and Appium server; used Android Studio to validate UI functionality, identifying 31 bugs across 2 mobile applications.</li>
+                        <li>Flagged 37 missing accessibility identifiers through automated testing.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'work-2' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'work-2' ? 'Tap to collapse' : 'Tap to expand'}
+                  </div>
                 </div>
               </div>
 
               {/* Bento Box 3 */}
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
-                  <div className="flex justify-between items-start gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black">STEM Research Coach</h4>
-                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2024 - Dec 2025</span>
+                <div
+                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
+                  onClick={() => toggleBento('work-3')}
+                >
+                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">STEM Research Coach</h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2024 - Dec 2025</span>
                   </div>
-                  <p className="font-label-mono text-sm text-deep-espresso mb-4">Texas State University Libraries</p>
+                  <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">Texas State University Libraries</p>
 
-                  {/* Expanded details */}
-                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                  {/* Desktop: hover-to-expand */}
+                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
                     <div className="overflow-hidden">
                       <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
                         <li>Coached 700+ undergraduate students on research techniques and finding relevant research papers.</li>
                         <li>Co-developed a structured Research Coach FAQ with 3 colleagues using Texas State University's CMS.</li>
                       </ul>
                     </div>
+                  </div>
+
+                  {/* Mobile: tap-to-expand */}
+                  <div className={`bento-details-mobile ${expandedBento === 'work-3' ? 'expanded' : ''}`}>
+                    <div>
+                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
+                        <li>Coached 700+ undergraduate students on research techniques and finding relevant research papers.</li>
+                        <li>Co-developed a structured Research Coach FAQ with 3 colleagues using Texas State University's CMS.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'work-3' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'work-3' ? 'Tap to collapse' : 'Tap to expand'}
                   </div>
                 </div>
               </div>
@@ -334,21 +390,24 @@ export default function Home() {
 
               {/* Project Bento Box 1 */}
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
-                  <div className="flex justify-between items-start gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black">SightX: Diabetic Retinopathy Detection System</h4>
-                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2026 - Present</span>
+                <div
+                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
+                  onClick={() => toggleBento('proj-1')}
+                >
+                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">SightX: Diabetic Retinopathy Detection System</h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">Feb 2026 - Present</span>
                   </div>
-                  <div className="font-label-mono text-sm text-deep-espresso mb-4 flex flex-col gap-2">
+                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
                     <p>Computer Vision, Machine Learning, Fullstack & Cloud</p>
                     <div className="flex gap-3 mt-1">
-                      <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded hover:bg-[#238636] hover:text-white transition-colors duration-300 text-xs tracking-wider">GitHub</a>
-                      <a href="https://darkmatterstech.blogspot.com/" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-warm-umber text-sandstone font-bold rounded hover:bg-[#B32821] hover:text-white transition-colors duration-300 text-xs tracking-wider">Blog</a>
+                      <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
+                      <a href="https://darkmatterstech.blogspot.com/" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-warm-umber text-sandstone font-bold rounded active:bg-[#B32821] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>Blog</a>
                     </div>
                   </div>
 
-                  {/* Expanded details */}
-                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                  {/* Desktop: hover-to-expand */}
+                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
                     <div className="overflow-hidden">
                       <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
                         <li>Trained a ResNet-50 V2 diabetic retinopathy classifier on 35K retinal images, achieving κ = 0.6454 on a personal MacBook (no cloud compute) using CLAHE preprocessing.</li>
@@ -359,25 +418,44 @@ export default function Home() {
                       </ul>
                     </div>
                   </div>
+
+                  {/* Mobile: tap-to-expand */}
+                  <div className={`bento-details-mobile ${expandedBento === 'proj-1' ? 'expanded' : ''}`}>
+                    <div>
+                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
+                        <li>Trained a ResNet-50 V2 diabetic retinopathy classifier on 35K retinal images, achieving κ = 0.6454 on a personal MacBook (no cloud compute) using CLAHE preprocessing.</li>
+                        <li>Built a post-processing safety pipeline using temperature scaling, Bayesian prior correction, and an asymmetric cost matrix converting raw model logits into 3 actionable triage tiers.</li>
+                        <li>Built a 108-iteration test-time augmentation ensemble running stochastic transforms per inference pass for robustness to camera artifacts.</li>
+                        <li>Built and shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with JWT + row-level security via Supabase, deployed to Red Hat Linux.</li>
+                        <li>Documented the entire system in a comprehensive blog, showcasing SightX as an educational sandbox with full architectural documentation.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'proj-1' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'proj-1' ? 'Tap to collapse' : 'Tap to expand'}
+                  </div>
                 </div>
               </div>
 
               {/* Project Bento Box 2 */}
               <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-6 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:scale-[1.03] hover:bg-[#d5d0bc] overflow-hidden group hover:border-pitch-black rounded-sm">
-                  <div className="flex justify-between items-start gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black">Personal Website Sandbox</h4>
-                    <span className="font-label-mono text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">2026 - Present</span>
+                <div
+                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
+                  onClick={() => toggleBento('proj-2')}
+                >
+                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Personal Website Sandbox</h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap bg-pitch-black/10 px-2 py-1 rounded">2026 - Present</span>
                   </div>
-                  <div className="font-label-mono text-sm text-deep-espresso mb-4 flex flex-col gap-2">
+                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
                     <p>Frontend & CI/CD Sandbox</p>
                     <div className="flex gap-3 mt-1">
-                      <a href="https://github.com/BibeshT-TXST/Personal_Website_FullStack-CICD-SandBox" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded hover:bg-[#238636] hover:text-white transition-colors duration-300 text-xs tracking-wider w-max">GitHub</a>
+                      <a href="https://github.com/BibeshT-TXST/Personal_Website_FullStack-CICD-SandBox" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider w-max" onClick={(e) => e.stopPropagation()}>GitHub</a>
                     </div>
                   </div>
 
-                  {/* Expanded details */}
-                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                  {/* Desktop: hover-to-expand */}
+                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
                     <div className="overflow-hidden">
                       <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
                         <li>Developing a digital portfolio that serves as an active engineering sandbox to experiment with modern frontend architectures.</li>
@@ -385,6 +463,20 @@ export default function Home() {
                         <li>Establishing continuous integration and deployment workflows to create a reliable foundation for rapid, ongoing feature iteration.</li>
                       </ul>
                     </div>
+                  </div>
+
+                  {/* Mobile: tap-to-expand */}
+                  <div className={`bento-details-mobile ${expandedBento === 'proj-2' ? 'expanded' : ''}`}>
+                    <div>
+                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
+                        <li>Developing a digital portfolio that serves as an active engineering sandbox to experiment with modern frontend architectures.</li>
+                        <li>Exploring advanced UI/UX concepts, including scroll-driven narratives and dynamic grid layouts, to craft a unique and engaging user experience.</li>
+                        <li>Establishing continuous integration and deployment workflows to create a reliable foundation for rapid, ongoing feature iteration.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'proj-2' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'proj-2' ? 'Tap to collapse' : 'Tap to expand'}
                   </div>
                 </div>
               </div>
@@ -401,10 +493,10 @@ export default function Home() {
         id="act-3"
       >
         <div className="w-full max-w-content-max-width mx-auto px-gutter mb-8 act-3-header">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-sandstone max-w-4xl">
+          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-sandstone max-w-4xl act-3-heading">
             But at the end of the day books, movies & video games <span className="text-warm-umber">are my escape</span>
           </h2>
-          <div className="w-24 h-1 bg-warm-umber mt-6"></div>
+          <div className="w-16 md:w-24 h-1 bg-warm-umber mt-4 md:mt-6"></div>
         </div>
 
         {/* Media Marquees */}
@@ -413,11 +505,11 @@ export default function Home() {
           {/* Row 1: Books (Scroll Left) */}
           <div className="flex w-max whitespace-nowrap animate-marquee-left marquee-speed-1">
             {[...Array(6)].map((_, i) => (
-              <div key={`books-${i}`} className="flex gap-6 px-3 min-w-max">
+              <div key={`books-${i}`} className="flex gap-3 md:gap-6 px-2 md:px-3 min-w-max">
                 {books.map((book, idx) => (
-                  <div key={`book-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer">
-                    <Image src={book.img} alt={book.title} fill sizes="192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
-                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm">
+                  <div key={`book-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer marquee-card">
+                    <Image src={book.img} alt={book.title} fill sizes="(max-width: 767px) 128px, 192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
+                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm marquee-overlay">
                       <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{book.title}</span>
                     </div>
                   </div>
@@ -429,11 +521,11 @@ export default function Home() {
           {/* Row 2: Games & Movies (Scroll Right) */}
           <div className="flex w-max whitespace-nowrap animate-marquee-right marquee-speed-2">
             {[...Array(6)].map((_, i) => (
-              <div key={`games-movies-${i}`} className="flex gap-6 px-3 min-w-max">
+              <div key={`games-movies-${i}`} className="flex gap-3 md:gap-6 px-2 md:px-3 min-w-max">
                 {[...games, ...movies].map((item, idx) => (
-                  <div key={`item-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer">
-                    <Image src={item.img} alt={item.title} fill sizes="192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
-                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm z-20">
+                  <div key={`item-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer marquee-card">
+                    <Image src={item.img} alt={item.title} fill sizes="(max-width: 767px) 128px, 192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
+                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm z-20 marquee-overlay">
                       <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{item.title}</span>
                     </div>
                   </div>
@@ -456,9 +548,9 @@ export default function Home() {
               Want more info? Please reach out.
             </p>
           </div>
-          <nav className="flex gap-8 font-label-mono text-label-mono">
+          <nav className="flex flex-wrap justify-center md:justify-end gap-6 md:gap-8 font-label-mono text-label-mono">
             <a
-              className="text-on-tertiary-container dark:text-on-surface-variant hover:translate-x-2 transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2"
+              className="text-on-tertiary-container dark:text-on-surface-variant transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2 footer-link"
               href="https://github.com/BibeshT-TXST"
               target="_blank"
               rel="noopener noreferrer"
@@ -466,7 +558,7 @@ export default function Home() {
               <span>GITHUB</span>
             </a>
             <a
-              className="text-on-tertiary-container dark:text-on-surface-variant hover:translate-x-2 transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2"
+              className="text-on-tertiary-container dark:text-on-surface-variant transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2 footer-link"
               href="https://www.linkedin.com/in/bibesh-timalsina-a7a9482b9/"
               target="_blank"
               rel="noopener noreferrer"
@@ -474,7 +566,7 @@ export default function Home() {
               <span>LINKEDIN</span>
             </a>
             <a
-              className="text-on-tertiary-container dark:text-on-surface-variant hover:translate-x-2 transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2"
+              className="text-on-tertiary-container dark:text-on-surface-variant transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2 footer-link"
               href="mailto:timaslinabibesh747@gmail.com"
             >
               <span>GMAIL</span>
