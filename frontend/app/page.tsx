@@ -405,13 +405,14 @@ export default function Home() {
                   onClick={() => toggleBento('project-1')}
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Med-AI-Vision <a href="https://github.com/Bibesh-T/MedAi_Vision" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Feb 2026 - Present</span>
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">SightX <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Feb 2026 - Mar 2026</span>
                   </div>
                   <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
-                    <p>Computer Vision, Machine Learning, Fullstack & Cloud</p>
+                    <p>Diabetic Retinopathy Detection System</p>
                     <div className="flex gap-3 mt-1">
                       <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
+                      <a href="https://darkmatterstech.blogspot.com/" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>Blog</a>
                     </div>
                   </div>
 
@@ -419,11 +420,10 @@ export default function Home() {
                   <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
                     <div className="overflow-hidden">
                       <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Trained a ResNet-50 V2 diabetic retinopathy classifier on 35K retinal images, achieving κ = 0.6454 on a personal MacBook (no cloud compute) using CLAHE preprocessing.</li>
-                        <li>Built a post-processing safety pipeline using temperature scaling, Bayesian prior correction, and an asymmetric cost matrix converting raw model logits into 3 actionable triage tiers.</li>
-                        <li>Built a 108-iteration test-time augmentation ensemble running stochastic transforms per inference pass for robustness to camera artifacts.</li>
-                        <li>Built and shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with JWT + row-level security via Supabase, deployed to Red Hat Linux.</li>
-                        <li>Documented the entire system in a comprehensive blog, showcasing SightX as an educational sandbox with full architectural documentation.</li>
+                        <li>Designed a post-processing safety layer (temperature scaling, Bayesian prior correction, asymmetric cost matrix) that converts raw model logits into 3 clinically actionable triage tiers, prioritizing false-negative avoidance over raw accuracy.</li>
+                        <li>Trained a ResNet-50 V2 classifier on 35K retinal images to κ = 0.6454 entirely on local Apple M4 hardware with zero cloud compute, using CLAHE preprocessing, cosine annealing with warmup, and gradual unfreezing.</li>
+                        <li>Built a 108-iteration test-time augmentation ensemble that runs stochastic transforms per inference pass and returns the modal prediction with averaged confidence, hardening the system against camera artifacts at inference time.</li>
+                        <li>Shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with ephemeral in-memory image handling so no patient data is ever written to disk, plus JWT and row-level security via Supabase, deployed with a single command to Red Hat Enterprise Linux servers.</li>
                       </ul>
                     </div>
                   </div>
@@ -432,11 +432,10 @@ export default function Home() {
                   <div className={`bento-details-mobile ${expandedBento === 'project-1' ? 'expanded' : ''}`}>
                     <div>
                       <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Trained a ResNet-50 V2 diabetic retinopathy classifier on 35K retinal images, achieving κ = 0.6454 on a personal MacBook (no cloud compute) using CLAHE preprocessing.</li>
-                        <li>Built a post-processing safety pipeline using temperature scaling, Bayesian prior correction, and an asymmetric cost matrix converting raw model logits into 3 actionable triage tiers.</li>
-                        <li>Built a 108-iteration test-time augmentation ensemble running stochastic transforms per inference pass for robustness to camera artifacts.</li>
-                        <li>Built and shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with JWT + row-level security via Supabase, deployed to Red Hat Linux.</li>
-                        <li>Documented the entire system in a comprehensive blog, showcasing SightX as an educational sandbox with full architectural documentation.</li>
+                        <li>Designed a post-processing safety layer (temperature scaling, Bayesian prior correction, asymmetric cost matrix) that converts raw model logits into 3 clinically actionable triage tiers, prioritizing false-negative avoidance over raw accuracy.</li>
+                        <li>Trained a ResNet-50 V2 classifier on 35K retinal images to κ = 0.6454 entirely on local Apple M4 hardware with zero cloud compute, using CLAHE preprocessing, cosine annealing with warmup, and gradual unfreezing.</li>
+                        <li>Built a 108-iteration test-time augmentation ensemble that runs stochastic transforms per inference pass and returns the modal prediction with averaged confidence, hardening the system against camera artifacts at inference time.</li>
+                        <li>Shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with ephemeral in-memory image handling so no patient data is ever written to disk, plus JWT and row-level security via Supabase, deployed with a single command to Red Hat Enterprise Linux servers.</li>
                       </ul>
                     </div>
                   </div>
@@ -453,7 +452,95 @@ export default function Home() {
                   onClick={() => toggleBento('project-2')}
                 >
                   <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Personal Website <a href="https://github.com/Bibesh-T/Personal_Website_FullStack-CICD" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Project-GitGud <a href="https://github.com/BibeshT-TXST/Project_GitGud" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2025 - Apr 2026</span>
+                  </div>
+                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
+                    <p>Containerized Inventory Platform</p>
+                    <div className="flex gap-3 mt-1">
+                      <a href="https://github.com/BibeshT-TXST/Project_GitGud" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
+                    </div>
+                  </div>
+
+                  {/* Desktop: hover-to-expand */}
+                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
+                        <li>Eliminated &quot;works on my machine&quot; environment problem by packaging the system into 3 connected services (Docker Compose, Nginx, Express.js, PostgreSQL) with identical behavior from local dev to Red Hat Linux production server.</li>
+                        <li>Secured REST API routes and user accounts against brute-force and token-reuse attacks using Argon2 password hashing with server-side peppering, JWT authentication, and an in-memory token blacklist for instant logout revocation.</li>
+                        <li>Built a GitHub Actions CI/CD pipeline that runs Jest unit tests and Supertest API integration suites on every push, catching regressions before they reach production.</li>
+                        <li>Built a React 18 / Vite / MUI dashboard for real-time search, status filtering, and direct CSV export of inventory records.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Mobile: tap-to-expand */}
+                  <div className={`bento-details-mobile ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
+                    <div>
+                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
+                        <li>Eliminated &quot;works on my machine&quot; environment problem by packaging the system into 3 connected services (Docker Compose, Nginx, Express.js, PostgreSQL) with identical behavior from local dev to Red Hat Linux production server.</li>
+                        <li>Secured REST API routes and user accounts against brute-force and token-reuse attacks using Argon2 password hashing with server-side peppering, JWT authentication, and an in-memory token blacklist for instant logout revocation.</li>
+                        <li>Built a GitHub Actions CI/CD pipeline that runs Jest unit tests and Supertest API integration suites on every push, catching regressions before they reach production.</li>
+                        <li>Built a React 18 / Vite / MUI dashboard for real-time search, status filtering, and direct CSV export of inventory records.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'project-2' ? 'Tap to collapse' : 'Tap to expand'}
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Bento Box 3 */}
+              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
+                <div
+                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
+                  onClick={() => toggleBento('project-3')}
+                >
+                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">LLM-Gateway <a href="https://github.com/BibeshT-TXST/LLM-Gateway" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
+                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Jul 2026 - Present</span>
+                  </div>
+                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
+                    <p>Self-Hosted Inference Gateway</p>
+                    <div className="flex gap-3 mt-1">
+                      <a href="https://github.com/BibeshT-TXST/LLM-Gateway" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
+                    </div>
+                  </div>
+
+                  {/* Desktop: hover-to-expand */}
+                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
+                        <li>Building a self-hosted LLM gateway in Go with multi-provider routing (Gemini + local Ollama), circuit-breaker failover, and reversible-token PII redaction with SQLite-backed audit logging.</li>
+                        <li>Building the routing and cache layers with Prometheus metrics and a redacted-prompt-keyed cache to cut duplicate inference cost and latency.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Mobile: tap-to-expand */}
+                  <div className={`bento-details-mobile ${expandedBento === 'project-3' ? 'expanded' : ''}`}>
+                    <div>
+                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
+                        <li>Building a self-hosted LLM gateway in Go with multi-provider routing (Gemini + local Ollama), circuit-breaker failover, and reversible-token PII redaction with SQLite-backed audit logging.</li>
+                        <li>Building the routing and cache layers with Prometheus metrics and a redacted-prompt-keyed cache to cut duplicate inference cost and latency.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-3' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'project-3' ? 'Tap to collapse' : 'Tap to expand'}
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Bento Box 4 */}
+              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
+                <div
+                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
+                  onClick={() => toggleBento('project-4')}
+                >
+                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Personal Website <a href="https://github.com/BibeshT-TXST/Personal_Website_FullStack-CICD-SandBox" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
                     <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">2026 - Present</span>
                   </div>
                   <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
@@ -475,7 +562,7 @@ export default function Home() {
                   </div>
 
                   {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
+                  <div className={`bento-details-mobile ${expandedBento === 'project-4' ? 'expanded' : ''}`}>
                     <div>
                       <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
                         <li>Developing a digital portfolio that serves as an active engineering sandbox to experiment with modern frontend architectures.</li>
@@ -484,8 +571,8 @@ export default function Home() {
                       </ul>
                     </div>
                   </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'project-2' ? 'Tap to collapse' : 'Tap to expand'}
+                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-4' ? 'expanded' : ''}`}>
+                    <span className="chevron">▼</span> {expandedBento === 'project-4' ? 'Tap to collapse' : 'Tap to expand'}
                   </div>
                 </div>
               </div>
