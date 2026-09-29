@@ -1,6 +1,6 @@
 # bibesh-timalsina.me
 
-My personal website — and a sandbox for practicing clean CI/CD.
+My personal website, and a sandbox for practicing clean CI/CD.
 
 **Live:** https://www.bibesh-timalsina.me
 
@@ -16,13 +16,16 @@ My personal website — and a sandbox for practicing clean CI/CD.
 ```
 frontend/
   app/            layout, page, global styles
-  components/     site header, motion helpers, icons
+  components/     header, project explorer, topography background, motion helpers
   components/ui/  shadcn/ui primitives
-  lib/content.ts  all site copy — edit this to update the site
-  public/         headshot (+ optional Resume.pdf)
+  lib/content.ts  all site copy (edit this to update the site)
+  public/         headshot, résumé PDF, generated topography.svg
+  scripts/        asset generators
 ```
 
-To show a résumé button, drop `Resume.pdf` into `frontend/public/`. The link appears on the next build.
+- **Résumé:** replace `frontend/public/Bibesh-Timalsina-Resume.pdf` to update the download.
+- **Background:** `topography.svg` is generated from seeded noise. Tweak `scripts/generate-topography.mjs`, then run `npm run gen:topography`.
+- **Copy style:** first person, short paragraphs, no em dashes or arrows.
 
 ## Development
 
