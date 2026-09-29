@@ -20,13 +20,13 @@ export default function Home() {
       <SiteHeader />
       <main id="top">
         <Hero />
-        <Section id="experience" label="Now" title="Days on a team, nights on my own.">
+        <Section id="experience" label="Now" title="days on a team, nights on my own">
           <Chapters />
         </Section>
-        <Section id="projects" label="Projects" title="Things I've built, and why.">
+        <Section id="projects" label="Projects" title="things I've built and why">
           <ProjectExplorer projects={projects} />
         </Section>
-        <Section id="writing" label="Writing" title="Notes from the build.">
+        <Section id="writing" label="Writing" title="notes from the build">
           <Writing />
         </Section>
         <Section id="about">
@@ -115,9 +115,9 @@ function Section({
     <section id={id} className={`${container} py-16 md:py-24`}>
       {label && title && (
         <Reveal className="mb-10 md:mb-14">
-          {/* Label leads in ink, the line continues in grey. */}
+          {/* One style for every heading: label in ink, comma, the line continues in grey. */}
           <h2 className="max-w-4xl text-3xl leading-tight font-semibold tracking-tight md:text-5xl">
-            {label}. <span className="text-foreground/35">{title}</span>
+            {label}, <span className="text-foreground/35">{title}</span>
           </h2>
         </Reveal>
       )}
@@ -201,7 +201,8 @@ function About() {
       <h2 className="text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-6xl">
         {about.values.map((v, i) => (
           <span key={v} className={cn("block", i > 0 && "text-foreground/30")}>
-            {v}.
+            {v}
+            {i < about.values.length - 1 && ","}
           </span>
         ))}
       </h2>

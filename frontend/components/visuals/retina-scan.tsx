@@ -1,14 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react"
-import { ShieldCheckIcon } from "lucide-react"
+import { motion, useInView, useReducedMotion } from "motion/react"
 
 import { ease } from "@/components/motion"
 import { cn } from "@/lib/utils"
-
-const frame = "relative overflow-hidden rounded-2xl border bg-background/85 backdrop-blur-[2px]"
-const mono = "font-mono text-[11px] tracking-tight text-muted-foreground"
+import { frame, mono } from "./shared"
 
 // SightX: a retina whose vessels draw in, swept by a scan line that counts through
 // the 108 test-time augmentation passes each prediction runs.
@@ -49,7 +46,7 @@ export function RetinaScan() {
   }, [inView, reduce])
 
   return (
-    <div ref={ref} className={cn(frame, "aspect-[16/11] sm:aspect-[2/1]")}>
+    <div ref={ref} className={cn(frame, "aspect-16/11 sm:aspect-2/1")}>
       <svg viewBox="0 0 400 220" className="absolute inset-0 size-full" aria-hidden>
         <defs>
           <clipPath id="fundus">
@@ -91,69 +88,4 @@ export function RetinaScan() {
       <span className={cn(mono, "absolute right-4 bottom-3")}>ResNet-50</span>
     </div>
   )
-}
-
-// ScrubX: a clinical note whose sensitive fields swap to tokens before leaving,
-// looping between the raw note and what the model actually receives.
-const fields = [
-  { raw: "Maria Lopez", token: "[PATIENT_1]" },
-  { raw: "58", token: "[AGE_1]" },
-  { raw: "03/14/2026", token: "[DATE_1]" },
-  { raw: "4410-2291", token: "[MRN_1]" },
-]
-
-function Field({ index, scrubbed }: { index: number; scrubbed: boolean }) {
-  const f = fields[index]
-  return (
-    <AnimatePresence mode="popLayout" initial={false}>
-      <motion.span
-        key={scrubbed ? "t" : "r"}
-        initial={{ opacity: 0, filter: "blur(4px)" }}
-        animate={{ opacity: 1, filter: "blur(0px)" }}
-        exit={{ opacity: 0, filter: "blur(4px)" }}
-        transition={{ duration: 0.35, delay: index * 0.12 }}
-        className={cn(
-          "inline-block rounded px-1",
-          scrubbed ? "bg-foreground text-background" : "bg-foreground/[0.07] text-foreground"
-        )}
-      >
-        {scrubbed ? f.token : f.raw}
-      </motion.span>
-    </AnimatePresence>
-  )
-}
-
-export function RedactionDemo() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { margin: "-40px" })
-  const reduce = useReducedMotion()
-  const [scrubbed, setScrubbed] = useState(true)
-
-  useEffect(() => {
-    if (!inView || reduce) return
-    const id = setInterval(() => setScrubbed((s) => !s), 2600)
-    return () => clearInterval(id)
-  }, [inView, reduce])
-
-  return (
-    <div ref={ref} className={cn(frame, "flex min-h-60 flex-col justify-between gap-4 p-4 sm:aspect-[2/1] sm:p-6")}>
-      <div className="flex items-center justify-between">
-        <span className={mono}>outgoing prompt</span>
-        <span className={cn(mono, "inline-flex items-center gap-1.5 text-foreground")}>
-          <ShieldCheckIcon className="size-3.5" />
-          {scrubbed ? "4 fields tokenized" : "scanning note"}
-        </span>
-      </div>
-      <p className="font-mono text-[12.5px] leading-7 text-foreground/80 sm:text-sm sm:leading-8">
-        Patient <Field index={0} scrubbed={scrubbed} />, age <Field index={1} scrubbed={scrubbed} />, seen on{" "}
-        <Field index={2} scrubbed={scrubbed} />. MRN <Field index={3} scrubbed={scrubbed} />. Reports blurred vision;
-        history of type 2 diabetes.
-      </p>
-      <span className={mono}>{scrubbed ? "safe to send to the model" : "contains patient data"}</span>
-    </div>
-  )
-}
-
-export function ProjectVisual({ kind }: { kind: "retina" | "redaction" }) {
-  return kind === "retina" ? <RetinaScan /> : <RedactionDemo />
 }

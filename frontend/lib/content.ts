@@ -1,3 +1,5 @@
+import type { VisualKind } from "@/components/visuals"
+
 // Single source of truth for site copy. Edit here, not in components.
 // House style: first person, short paragraphs, no em dashes, no arrows.
 
@@ -18,7 +20,7 @@ export const profile = {
 export const hero = {
   focus: ["Healthcare", "Secure AI"] as string[],
   greeting: "Hi, I'm Bibesh.",
-  headline: "I like the parts of software nobody notices until they break.",
+  headline: "I like the parts of software nobody notices until they break",
   intro:
     "I study Computer Science and Data Analytics at Texas State as a first generation college student. I spend my days on the university library's systems team and my nights teaching models to see. Lately both have pulled me toward healthcare and secure AI.",
   meta: "San Marcos, Texas",
@@ -49,7 +51,7 @@ export const chapters = {
 
 export type Project = {
   name: string
-  visual?: "retina" | "redaction"
+  visual?: VisualKind
   kind: string
   status: string
   summary: string
@@ -76,7 +78,7 @@ export const projects: Project[] = [
   },
   {
     name: "ScrubX",
-    visual: "redaction",
+    visual: "pipeline",
     kind: "Healthcare · AI security",
     status: "In progress",
     summary:
@@ -88,6 +90,7 @@ export const projects: Project[] = [
   },
   {
     name: "GitGud",
+    visual: "cluster",
     kind: "Full stack · Security",
     status: "Completed",
     summary:
@@ -99,6 +102,7 @@ export const projects: Project[] = [
   },
   {
     name: "Lets Build Us",
+    visual: "breath",
     kind: "Hackathon · Wellness",
     status: "Hackathon build",
     summary: "A wellness app built around one question: can we help someone feel better in sixty seconds, no account required?",
@@ -113,11 +117,6 @@ export const writing = {
   intro: "I keep a build log called Dark Matters Tech. It's where the experiments go, especially the failed ones.",
   posts: [
     {
-      title: "Starting an LLM gateway from zero",
-      date: "Jul 2026",
-      href: "https://darkmatterstech.blogspot.com/2026/07/llm-gateway-blog-day-1.html",
-    },
-    {
       title: "SightX V2: A New Hope",
       date: "May 2026",
       href: "https://darkmatterstech.blogspot.com/2026/05/sightx-v2-new-hope.html",
@@ -131,6 +130,11 @@ export const writing = {
       title: "Training my first model on a laptop",
       date: "Mar 2026",
       href: "https://darkmatterstech.blogspot.com/2026/03/sightx-i-trained-my-first-ai-model-on.html",
+    },
+    {
+      title: "Freezing layers and the 65% paradox",
+      date: "Mar 2026",
+      href: "https://darkmatterstech.blogspot.com/2026/03/sightx-architecture-assembly-freezing.html",
     },
   ],
 }
@@ -147,5 +151,5 @@ export const about = {
 
 export const contact = {
   heading: "Have something worth building?",
-  body: "I'm looking for internships and early career roles, and I'm happy to relocate. Email is the fastest way to reach me.",
+  body: "I'm looking for early career roles, and I'm always up for a team project or a hackathon. Email is the fastest way to reach me.",
 }

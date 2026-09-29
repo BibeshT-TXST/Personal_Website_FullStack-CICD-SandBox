@@ -3,7 +3,7 @@
 import { motion } from "motion/react"
 
 import { ease } from "@/components/motion"
-import { ProjectVisual } from "@/components/project-visuals"
+import { ProjectVisual } from "@/components/visuals"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { Project } from "@/lib/content"
