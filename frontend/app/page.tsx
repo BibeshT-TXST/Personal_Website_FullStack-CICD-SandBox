@@ -1,36 +1,31 @@
-import fs from "node:fs"
-import path from "node:path"
 import Image from "next/image"
-import { ArrowRightIcon, ArrowUpRightIcon, MailIcon, MapPinIcon } from "lucide-react"
+import { FileTextIcon, MailIcon, MapPinIcon, MoonIcon, SunIcon } from "lucide-react"
 
 import { GitHubIcon, LinkedInIcon } from "@/components/icons"
-import { CountUp, Reveal } from "@/components/motion"
+import { Reveal } from "@/components/motion"
+import { ProjectExplorer } from "@/components/project-explorer"
 import { SiteHeader } from "@/components/site-header"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { education, experience, profile, projects, skills, stats, writing } from "@/lib/content"
+import { about, chapters, contact, hero, profile, projects, writing } from "@/lib/content"
+import { cn } from "@/lib/utils"
 import headshot from "@/public/headshot.jpg"
 
-// Résumé link appears only once public/Resume.pdf is added.
-const hasResume = fs.existsSync(path.join(process.cwd(), "public", "Resume.pdf"))
-const resumeHref = hasResume ? `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/Resume.pdf` : undefined
-
+const resumeHref = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${profile.resume}`
 const container = "mx-auto max-w-5xl px-5 sm:px-8"
 
 export default function Home() {
   return (
     <>
-      <SiteHeader resumeHref={resumeHref} />
+      <SiteHeader />
       <main id="top">
         <Hero />
-        <Stats />
-        <Section id="experience" label="Experience">
-          <Experience />
+        <Section id="experience" label="Now" title="Days on a team, nights on my own.">
+          <Chapters />
         </Section>
-        <Section id="projects" label="Projects">
-          <Projects />
+        <Section id="projects" label="Projects" title="Things I've built, and why.">
+          <ProjectExplorer projects={projects} />
         </Section>
-        <Section id="writing" label="Writing">
+        <Section id="writing" label="Writing" title="Notes from the build.">
           <Writing />
         </Section>
         <Section id="about" label="About">
@@ -43,184 +38,155 @@ export default function Home() {
   )
 }
 
+function ResumeButton({ className }: { className?: string }) {
+  return (
+    <Button asChild className={cn("h-11 rounded-full px-5 text-[15px]", className)}>
+      <a href={resumeHref} download>
+        <FileTextIcon /> Download résumé
+      </a>
+    </Button>
+  )
+}
+
 function Hero() {
   return (
-    <section className={`${container} pt-10 pb-16 md:pt-20 md:pb-24`}>
-      <div className="grid items-end gap-10 md:grid-cols-[1fr_300px] md:gap-16 lg:grid-cols-[1fr_340px]">
+    <section className={`${container} pt-10 pb-8 md:pt-20 md:pb-12`}>
+      <div className="grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-16">
         <Reveal>
-          <p className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[13px] text-muted-foreground">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/60 motion-reduce:hidden" />
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-            </span>
-            {profile.availability}
-          </p>
-          <h1 className="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-            {profile.headline}
+          <p className="text-lg text-muted-foreground">{hero.greeting}</p>
+          <h1 className="mt-3 max-w-2xl text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            {hero.headline}
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">{profile.summary}</p>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">{hero.intro}</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild className="h-11 rounded-full px-5 text-[15px]">
-              <a href="#projects">
-                View projects <ArrowRightIcon />
+            <ResumeButton />
+            <Button asChild variant="outline" className="h-11 rounded-full bg-background/70 px-5 text-[15px]">
+              <a href={`mailto:${profile.email}`}>
+                <MailIcon /> Say hello
               </a>
             </Button>
-            <Button asChild variant="outline" className="h-11 rounded-full px-5 text-[15px]">
-              <a href={`mailto:${profile.email}`}>Get in touch</a>
-            </Button>
           </div>
-          <div className="mt-8 flex items-center gap-5 text-sm text-muted-foreground">
+          <div className="mt-8 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
-              <MapPinIcon className="size-4" /> {profile.location}
+              <MapPinIcon className="size-4" /> {hero.meta}
             </span>
-            <a href={profile.links.github} className="transition-colors hover:text-foreground" aria-label="GitHub">
-              <GitHubIcon className="size-[18px]" />
-            </a>
-            <a href={profile.links.linkedin} className="transition-colors hover:text-foreground" aria-label="LinkedIn">
-              <LinkedInIcon className="size-[18px]" />
-            </a>
+            <span className="flex items-center gap-4">
+              <a href={profile.links.github} className="transition-colors hover:text-foreground" aria-label="GitHub">
+                <GitHubIcon className="size-4.5" />
+              </a>
+              <a href={profile.links.linkedin} className="transition-colors hover:text-foreground" aria-label="LinkedIn">
+                <LinkedInIcon className="size-4.5" />
+              </a>
+            </span>
           </div>
         </Reveal>
-        <Reveal delay={0.1}>
-          <Image
-            src={headshot}
-            alt={`Portrait of ${profile.name}`}
-            priority
-            placeholder="blur"
-            sizes="(min-width: 768px) 340px, 100vw"
-            className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_40%] md:aspect-[4/5]"
-          />
+        <Reveal delay={0.1} className="order-first md:order-last">
+          <div className="size-32 rounded-full border bg-background p-1.5 sm:size-40 md:size-72 md:p-2 lg:size-80">
+            <Image
+              src={headshot}
+              alt={`Portrait of ${profile.name}`}
+              priority
+              placeholder="blur"
+              sizes="(min-width: 1024px) 320px, (min-width: 768px) 288px, 160px"
+              className="size-full rounded-full object-cover object-[48%_45%]"
+            />
+          </div>
         </Reveal>
       </div>
     </section>
   )
 }
 
-function Stats() {
+function Section({
+  id,
+  label,
+  title,
+  children,
+}: {
+  id: string
+  label: string
+  title?: string
+  children: React.ReactNode
+}) {
   return (
-    <section className="border-y bg-muted/50">
-      <dl className={`${container} grid grid-cols-2 gap-x-6 gap-y-8 py-10 md:grid-cols-4 md:py-12`}>
-        {stats.map((s) => (
-          <div key={s.label}>
-            <dt className="sr-only">{s.label}</dt>
-            <dd className="text-3xl font-semibold tracking-tight md:text-4xl">
-              <CountUp value={s.value} decimals={s.decimals} prefix={s.prefix} suffix={s.suffix} />
-            </dd>
-            <dd aria-hidden className="mt-1.5 text-sm leading-snug text-muted-foreground">
-              {s.label}
-            </dd>
-          </div>
+    <section id={id} className={`${container} py-16 md:py-24`}>
+      <Reveal>
+        <p className="flex items-center gap-3 text-sm font-medium text-muted-foreground">
+          <span className="size-1.5 rounded-full bg-foreground" />
+          {label}
+        </p>
+        {title && (
+          <h2 className="mt-4 max-w-2xl text-3xl leading-tight font-semibold tracking-tight text-balance md:text-5xl">
+            {title}
+          </h2>
+        )}
+      </Reveal>
+      <div className={title ? "mt-10 md:mt-14" : "mt-6"}>{children}</div>
+    </section>
+  )
+}
+
+function Chapters() {
+  const panels = [
+    { ...chapters.day, Icon: SunIcon, dark: false },
+    { ...chapters.night, Icon: MoonIcon, dark: true },
+  ]
+  return (
+    <>
+      <div className="grid gap-4 md:grid-cols-2">
+        {panels.map(({ label, where, since, body, Icon, dark }, i) => (
+          <Reveal
+            key={label}
+            delay={i * 0.08}
+            className={cn(
+              "rounded-3xl p-7 md:p-9",
+              dark ? "bg-foreground text-background" : "border bg-background/80 backdrop-blur-[2px]"
+            )}
+          >
+            <div
+              className={cn(
+                "flex items-center justify-between text-sm",
+                dark ? "text-background/60" : "text-muted-foreground"
+              )}
+            >
+              <span className="inline-flex items-center gap-2">
+                <Icon className="size-4" /> {label}
+              </span>
+              <span>{since}</span>
+            </div>
+            <h3 className="mt-6 text-xl font-semibold tracking-tight">{where}</h3>
+            <div className={cn("mt-4 space-y-4 leading-relaxed", dark ? "text-background/75" : "text-foreground/75")}>
+              {body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+          </Reveal>
         ))}
-      </dl>
-    </section>
-  )
-}
-
-function Section({ id, label, children }: { id: string; label: string; children: React.ReactNode }) {
-  return (
-    <section id={id} className={`${container} py-14 md:py-20`}>
-      <div className="grid gap-8 md:grid-cols-[180px_1fr] md:gap-12">
-        <h2 className="text-sm font-medium text-muted-foreground md:pt-1.5">{label}</h2>
-        <div>{children}</div>
       </div>
-    </section>
-  )
-}
-
-function Bullets({ items }: { items: string[] }) {
-  return (
-    <ul className="mt-4 space-y-2.5">
-      {items.map((p) => (
-        <li key={p} className="relative pl-5 leading-relaxed text-foreground/85">
-          <span className="absolute top-[0.7em] left-0 h-px w-2.5 bg-foreground/40" />
-          {p}
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-function Experience() {
-  return (
-    <div className="divide-y">
-      {experience.map((role) => (
-        <Reveal key={role.title} className="py-8 first:pt-0 last:pb-0">
-          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-            <h3 className="text-xl font-semibold tracking-tight">{role.title}</h3>
-            <p className="shrink-0 text-sm text-muted-foreground tabular-nums">{role.period}</p>
-          </div>
-          <p className="mt-1 text-muted-foreground">
-            {role.org} · {role.place}
-          </p>
-          <Bullets items={role.points} />
-          {role.stack && <p className="mt-4 text-sm text-muted-foreground">{role.stack.join(" · ")}</p>}
-        </Reveal>
-      ))}
-    </div>
-  )
-}
-
-function Projects() {
-  return (
-    <div className="divide-y">
-      {projects.map((p) => (
-        <Reveal key={p.name} className="py-8 first:pt-0 last:pb-0">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <h3 className="text-2xl font-semibold tracking-tight">{p.name}</h3>
-            {p.status && <Badge variant="secondary">{p.status}</Badge>}
-            <span className="ml-auto text-sm text-muted-foreground tabular-nums">{p.period}</span>
-          </div>
-          <p className="mt-2 text-lg leading-snug">{p.tagline}</p>
-          <Bullets items={p.points} />
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap gap-1.5">
-              {p.stack.map((t) => (
-                <Badge key={t} variant="outline" className="font-normal text-muted-foreground">
-                  {t}
-                </Badge>
-              ))}
-            </div>
-            <div className="flex gap-4">
-              {p.links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  className="group inline-flex items-center gap-1 text-sm font-medium underline-offset-4 hover:underline"
-                >
-                  {l.label}
-                  <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      ))}
-    </div>
+      <Reveal>
+        <p className="mt-10 max-w-3xl leading-relaxed text-muted-foreground md:text-lg">{chapters.before}</p>
+      </Reveal>
+    </>
   )
 }
 
 function Writing() {
   return (
     <Reveal>
-      <p className="max-w-xl leading-relaxed text-muted-foreground">
-        I document what I build on{" "}
+      <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
+        {writing.intro}{" "}
         <a href={profile.links.blog} className="font-medium text-foreground underline underline-offset-4">
-          Dark Matters Tech
+          Visit the blog
         </a>
-        , mistakes included.
       </p>
-      <ul className="mt-6 divide-y border-y">
-        {writing.map((post) => (
-          <li key={post.href}>
-            <a
-              href={post.href}
-              className="group flex items-center justify-between gap-6 py-4 transition-colors hover:bg-muted/50 sm:px-2"
-            >
-              <span className="font-medium">{post.title}</span>
-              <span className="flex shrink-0 items-center gap-3 text-sm text-muted-foreground tabular-nums">
-                <span className="hidden sm:inline">{post.date}</span>
-                <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      <ul className="mt-8 border-t">
+        {writing.posts.map((post) => (
+          <li key={post.href} className="border-b">
+            <a href={post.href} className="group flex items-baseline justify-between gap-6 py-5">
+              <span className="text-lg font-medium tracking-tight decoration-foreground/30 underline-offset-[6px] group-hover:underline">
+                {post.title}
               </span>
+              <span className="shrink-0 text-sm text-muted-foreground tabular-nums">{post.date}</span>
             </a>
           </li>
         ))}
@@ -232,69 +198,62 @@ function Writing() {
 function About() {
   return (
     <Reveal>
-      <div className="max-w-2xl space-y-4 text-lg leading-relaxed">
-        <p>
-          I like solving problems, making existing solutions faster, and removing the hidden variables that make
-          systems fragile.
-        </p>
-        <p className="text-muted-foreground">
-          Right now I&apos;m focused on backend architecture, AWS, and serving models securely — with clean version
-          control and tested code as the baseline.
-        </p>
-      </div>
-
-      <div className="mt-10 border-t pt-8">
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-          <h3 className="font-semibold">{education.school}</h3>
-          <p className="text-sm text-muted-foreground tabular-nums">{education.period}</p>
-        </div>
-        <p className="mt-1 text-muted-foreground">{education.degree}</p>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{education.coursework}</p>
-      </div>
-
-      <dl className="mt-8 divide-y border-t">
-        {skills.map((s) => (
-          <div key={s.group} className="grid gap-1 py-3.5 sm:grid-cols-[160px_1fr] sm:gap-6">
-            <dt className="text-sm font-medium">{s.group}</dt>
-            <dd className="text-sm text-muted-foreground">{s.items.join(", ")}</dd>
-          </div>
+      <h2 className="text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-6xl">
+        {about.values.map((v, i) => (
+          <span key={v} className={cn("block", i > 0 && "text-foreground/30")}>
+            {v}.
+          </span>
         ))}
-      </dl>
+      </h2>
+      <div className="mt-10 grid gap-10 md:grid-cols-[1fr_280px] md:gap-16">
+        <div className="max-w-2xl space-y-5 text-lg leading-relaxed text-foreground/80">
+          {about.body.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
+        <dl className="space-y-6 text-sm md:border-l md:pl-8">
+          <div>
+            <dt className="font-medium">Education</dt>
+            <dd className="mt-1.5 leading-relaxed text-muted-foreground">{about.education}</dd>
+          </div>
+          <div>
+            <dt className="font-medium">Toolbox</dt>
+            <dd className="mt-1.5 leading-relaxed text-muted-foreground">{about.toolbox}</dd>
+          </div>
+        </dl>
+      </div>
     </Reveal>
   )
 }
 
 function Contact() {
+  const ghost =
+    "h-11 rounded-full border-background/25 bg-transparent px-5 text-[15px] text-background hover:bg-background/10 hover:text-background"
   return (
     <section id="contact" className="bg-foreground text-background">
       <div className={`${container} py-20 md:py-28`}>
         <Reveal>
           <h2 className="max-w-2xl text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl">
-            Let&apos;s build something that holds up.
+            {contact.heading}
           </h2>
-          <p className="mt-5 max-w-lg text-lg text-background/70">
-            Internships, full-time roles, or a project worth talking about — my inbox is open.
-          </p>
+          <p className="mt-5 max-w-lg text-lg text-background/70">{contact.body}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild className="h-11 rounded-full bg-background px-5 text-[15px] text-foreground hover:bg-background/90">
               <a href={`mailto:${profile.email}`}>
                 <MailIcon /> Email me
               </a>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-11 rounded-full border-background/25 bg-transparent px-5 text-[15px] text-background hover:bg-background/10 hover:text-background"
-            >
+            <Button asChild variant="outline" className={ghost}>
+              <a href={resumeHref} download>
+                <FileTextIcon /> Résumé
+              </a>
+            </Button>
+            <Button asChild variant="outline" className={ghost}>
               <a href={profile.links.linkedin}>
                 <LinkedInIcon className="size-4" /> LinkedIn
               </a>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-11 rounded-full border-background/25 bg-transparent px-5 text-[15px] text-background hover:bg-background/10 hover:text-background"
-            >
+            <Button asChild variant="outline" className={ghost}>
               <a href={profile.links.github}>
                 <GitHubIcon className="size-4" /> GitHub
               </a>

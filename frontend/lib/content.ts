@@ -1,14 +1,12 @@
 // Single source of truth for site copy. Edit here, not in components.
+// House style: first person, short paragraphs, no em dashes, no arrows.
 
 export const profile = {
   name: "Bibesh Timalsina",
   role: "Software Engineer",
   location: "San Marcos, Texas",
   email: "timalsinabibesh747@gmail.com",
-  headline: "I build systems at work and train models at home.",
-  summary:
-    "Computer Science and Data Analytics student at Texas State. On the University Libraries systems team I ship backend services, CI/CD pipelines and secure auth used by real staff every day.",
-  availability: "Open to internships and relocation",
+  resume: "/Bibesh-Timalsina-Resume.pdf",
   links: {
     github: "https://github.com/BibeshT-TXST",
     linkedin: "https://www.linkedin.com/in/bibesh-timalsina-a7a9482b9/",
@@ -17,65 +15,43 @@ export const profile = {
   },
 } as const
 
-export const stats = [
-  { value: 0.857, decimals: 3, prefix: "κ ", suffix: "", label: "SightX model accuracy (quadratic kappa)" },
-  { value: 35, decimals: 0, prefix: "", suffix: "K", label: "Retinal images trained on, zero cloud compute" },
-  { value: 100, decimals: 0, prefix: "", suffix: "+", label: "Library staff using software I help build" },
-  { value: 700, decimals: 0, prefix: "", suffix: "+", label: "Students coached on research" },
-] as const
-
-export type Role = {
-  title: string
-  org: string
-  place: string
-  period: string
-  points: string[]
-  stack?: string[]
+export const hero = {
+  greeting: "Hi, I'm Bibesh.",
+  headline: "I like the parts of software nobody notices until they break.",
+  intro:
+    "I study Computer Science and Data Analytics at Texas State as a first generation college student. I spend my days on the university library's systems team and my nights teaching models to see. Lately both have pulled me toward healthcare and secure AI.",
+  meta: "San Marcos, Texas · Open to relocation",
 }
 
-export const experience: Role[] = [
-  {
-    title: "Systems Support Assistant",
-    org: "Texas State University Libraries",
-    place: "San Marcos, TX",
-    period: "Dec 2025 — Present",
-    points: [
-      "Build OpenAPI specs, controllers and services with two senior engineers for the Libraries Travel App, used by 100+ staff. Requests now process ~30% faster.",
-      "Rebuilt a legacy inventory tool as a 4-container app (Nginx, Next.js, Flask, PostgreSQL) behind TXST SSO, shipped to RHEL via GitHub Actions.",
-      "Designed a reusable JWT cookie auth system with a Next.js proxy and Argon2 hashing, now used across 3 projects.",
-      "Traced a live data-duplication bug in a Flask backend and fixed it with WHERE NOT EXISTS subqueries.",
-    ],
-    stack: ["TypeScript", "Next.js", "Flask", "PostgreSQL", "Docker", "Nginx", "GitHub Actions", "RHEL"],
-  },
-  {
-    title: "STEM Research Coach",
-    org: "Texas State University Libraries",
-    place: "San Marcos, TX",
-    period: "Feb 2024 — Dec 2025",
-    points: [
-      "Coached 700+ undergraduates on database search strategy and finding peer-reviewed literature.",
-      "Advised three graduate students on machine learning research projects.",
-      "Co-authored the Research Coach FAQ in the Libraries CMS.",
+export const chapters = {
+  day: {
+    label: "By day",
+    where: "Systems team, Texas State University Libraries",
+    since: "Since Dec 2025",
+    body: [
+      "I work alongside two senior engineers on the tools the library runs on. My first real assignment was the backend for a travel request app that more than a hundred staff now use, and it cut their wait by about a third.",
+      "Since then I've rebuilt an aging inventory tool into a proper web app behind campus sign on, and written the login system three of our projects now share. My favorite afternoon so far was chasing duplicate records through a live database until one query gave itself away.",
     ],
   },
-  {
-    title: "IT Support & Web Developer",
-    org: "Association of Statistics & Analytics",
-    place: "Volunteer",
-    period: "Aug 2026 — Present",
-    points: [
-      "Primary developer of the club's public site: Next.js, React 19, shadcn/ui and Framer Motion.",
-      "Set up CI/CD with separate dev and production deployments on Vercel and GitHub Pages.",
+  night: {
+    label: "By night",
+    where: "Personal projects and a build blog",
+    since: "Always",
+    body: [
+      "At home I get to be a researcher. I trained an eye disease classifier on my own laptop without renting a single GPU, turned it into a working screening app, and I'm now rebuilding it on AWS one service at a time.",
+      "I write about every step, including the ones that failed. Those tend to be the most useful posts.",
     ],
   },
-]
+  before:
+    "Before this I spent two years as a STEM research coach at the library, helping more than 700 students find sources worth trusting. It taught me to explain hard things simply, which I still lean on every time I open a pull request. These days I also look after the website for my campus statistics club.",
+}
 
 export type Project = {
   name: string
-  tagline: string
-  period: string
-  status?: string
-  points: string[]
+  kind: string
+  status: string
+  summary: string
+  detail: string
   stack: string[]
   links: { label: string; href: string }[]
 }
@@ -83,89 +59,89 @@ export type Project = {
 export const projects: Project[] = [
   {
     name: "SightX",
-    tagline: "Diabetic retinopathy screening, from model to deployed clinical tool.",
-    period: "Feb 2026 — Present",
-    status: "Migrating to AWS",
-    points: [
-      "Trained a ResNet-50 classifier on 35K retinal images to κ = 0.857 on an Apple M4 laptop.",
-      "108-pass test-time augmentation and a cost matrix that penalizes missed diagnoses.",
-      "3-container stack (React, Node.js, FastAPI) on RHEL; moving to CloudFront, Lambda, SQS and RDS.",
-    ],
+    kind: "Healthcare · Computer vision",
+    status: "Live, moving to AWS",
+    summary:
+      "Diabetic retinopathy can take someone's sight before they notice a single symptom. SightX is my attempt at an early warning: upload a photo of the retina and get a screening result a clinician can act on.",
+    detail:
+      "I trained the model on 35,000 retinal images on an M4 MacBook. A missed diagnosis costs more than a false alarm, so every prediction runs through 108 augmented passes and a cost matrix that leans toward caution.",
     stack: ["PyTorch", "FastAPI", "React", "Node.js", "Docker", "AWS"],
     links: [
-      { label: "GitHub", href: "https://github.com/BibeshT-TXST/SightX" },
-      { label: "Build log", href: "https://darkmatterstech.blogspot.com/" },
+      { label: "View the code", href: "https://github.com/BibeshT-TXST/SightX" },
+      { label: "Read the build log", href: "https://darkmatterstech.blogspot.com/" },
     ],
   },
   {
     name: "ScrubX",
-    tagline: "A security gateway that lets clinical apps use LLMs without leaking patient data.",
-    period: "Jul 2026 — Present",
+    kind: "Healthcare · AI security",
     status: "In progress",
-    points: [
-      "Tokenizes sensitive patient details before a prompt reaches the model, restores them on the way back.",
-      "Staged pipeline — normalize, detect, decide, tokenize, call, restore — with an off-path audit trail.",
-    ],
-    stack: ["Python", "LLMs", "Security", "Healthcare"],
-    links: [{ label: "GitHub", href: "https://github.com/BibeshT-TXST/ScrubX" }],
+    summary:
+      "Hospitals want to use large language models, but patient data can't leave the building. ScrubX sits in the middle and swaps sensitive details for tokens before a prompt goes out, then puts them back when the answer returns.",
+    detail:
+      "Every request leaves an audit trail and anything risky is stopped at the gate. Each stage is its own module, so any piece can be swapped out without touching the rest.",
+    stack: ["Python", "LLMs", "Privacy", "Audit logging"],
+    links: [{ label: "View the code", href: "https://github.com/BibeshT-TXST/ScrubX" }],
   },
   {
     name: "GitGud",
-    tagline: "A containerized inventory platform with hardened auth.",
-    period: "Dec 2025 — Apr 2026",
-    points: [
-      "Nginx, Node.js and PostgreSQL containers with a load balancer across stateless replicas.",
-      "Argon2 + pepper, JWT auth and a token blacklist against brute-force and token reuse.",
-      "Jest tests run in GitHub Actions on every pull request.",
-    ],
-    stack: ["Node.js", "PostgreSQL", "Nginx", "Docker", "MUI"],
-    links: [{ label: "GitHub", href: "https://github.com/BibeshT-TXST/Project_GitGud" }],
+    kind: "Full stack · Security",
+    status: "Completed",
+    summary:
+      "My onboarding project on the systems team, and the place I learned to take security personally.",
+    detail:
+      "A book inventory platform split into three containers behind a load balancer, with peppered password hashing, signed tokens and a blacklist for stolen ones. Tests run on every pull request before anything reaches main.",
+    stack: ["Node.js", "PostgreSQL", "Nginx", "Docker", "Material UI"],
+    links: [{ label: "View the code", href: "https://github.com/BibeshT-TXST/Project_GitGud" }],
   },
   {
     name: "Lets Build Us",
-    tagline: "A 60-second wellness app built at a hackathon, powered by Gemini.",
-    period: "Mar 2026",
-    points: ["No logins, instant value: reflections mapped to real-time wellness interventions."],
-    stack: ["JavaScript", "Gemini", "React"],
-    links: [{ label: "GitHub", href: "https://github.com/BibeshT-TXST/NH2026" }],
+    kind: "Hackathon · Wellness",
+    status: "Hackathon build",
+    summary: "A wellness app built around one question: can we help someone feel better in sixty seconds, no account required?",
+    detail:
+      "Built with my team over a hackathon weekend. Gemini reads a short reflection and matches it with a small, real thing you can do right now.",
+    stack: ["JavaScript", "React", "Gemini"],
+    links: [{ label: "View the code", href: "https://github.com/BibeshT-TXST/NH2026" }],
   },
 ]
 
-export const writing = [
-  {
-    title: "LLM Gateway: Day 1",
-    date: "Jul 25, 2026",
-    href: "https://darkmatterstech.blogspot.com/2026/07/llm-gateway-blog-day-1.html",
-  },
-  {
-    title: "SightX V2: A New Hope",
-    date: "May 25, 2026",
-    href: "https://darkmatterstech.blogspot.com/2026/05/sightx-v2-new-hope.html",
-  },
-  {
-    title: "SightX: We Shipped It",
-    date: "Apr 7, 2026",
-    href: "https://darkmatterstech.blogspot.com/2026/04/sightx-we-shipped-it-journey-comes-to.html",
-  },
-  {
-    title: "Trained My First AI Model on a Laptop",
-    date: "Mar 5, 2026",
-    href: "https://darkmatterstech.blogspot.com/2026/03/sightx-i-trained-my-first-ai-model-on.html",
-  },
-]
+export const writing = {
+  intro: "I keep a build log called Dark Matters Tech. It's where the experiments go, especially the failed ones.",
+  posts: [
+    {
+      title: "Starting an LLM gateway from zero",
+      date: "Jul 2026",
+      href: "https://darkmatterstech.blogspot.com/2026/07/llm-gateway-blog-day-1.html",
+    },
+    {
+      title: "SightX V2: A New Hope",
+      date: "May 2026",
+      href: "https://darkmatterstech.blogspot.com/2026/05/sightx-v2-new-hope.html",
+    },
+    {
+      title: "We shipped it",
+      date: "Apr 2026",
+      href: "https://darkmatterstech.blogspot.com/2026/04/sightx-we-shipped-it-journey-comes-to.html",
+    },
+    {
+      title: "Training my first model on a laptop",
+      date: "Mar 2026",
+      href: "https://darkmatterstech.blogspot.com/2026/03/sightx-i-trained-my-first-ai-model-on.html",
+    },
+  ],
+}
 
-export const skills = [
-  { group: "Languages", items: ["Python", "TypeScript", "SQL", "C++"] },
-  { group: "Frameworks", items: ["React", "Next.js", "Node.js", "Flask", "FastAPI", "OpenAPI"] },
-  { group: "Data", items: ["PostgreSQL", "MongoDB", "Supabase", "Vector DBs"] },
-  { group: "Cloud & DevOps", items: ["AWS", "Docker", "Nginx", "GitHub Actions", "RHEL", "Vercel"] },
-  { group: "AI / ML", items: ["PyTorch", "Transfer learning", "RAG", "Evaluations", "MCP"] },
-]
+export const about = {
+  values: ["Honor", "Authenticity", "Consistency"],
+  body: [
+    "Those three words sit at the top of my GitHub, and they're the standard I try to hold my work to. I would rather ship something small and solid than something big and fragile, then come back to redesign, rethink and refine it.",
+    "Away from the keyboard I'm usually outside, somewhere old and quiet: a temple, a trail, a tree that has been standing for centuries. The line in my Instagram bio says it better than I can. Seek the temple within.",
+  ],
+  education: "B.S. Computer Science and Data Analytics, Texas State University, class of 2027",
+  toolbox: "Python, TypeScript, SQL, React, Next.js, Node.js, Flask, FastAPI, PostgreSQL, Docker, AWS, PyTorch",
+}
 
-export const education = {
-  school: "Texas State University",
-  degree: "B.S. Computer Science and Data Analytics",
-  period: "Jan 2024 — Dec 2027",
-  coursework:
-    "Software Engineering, Algorithms, Machine Learning, Artificial Intelligence, Computer Systems Security, Parallel Programming",
+export const contact = {
+  heading: "Have something worth building?",
+  body: "I'm looking for internships and early career roles, and I'm happy to relocate. Email is the fastest way to reach me.",
 }

@@ -2,16 +2,17 @@ import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 
 import { MotionProvider } from "@/components/motion"
-import { profile } from "@/lib/content"
+import { Topography } from "@/components/topography"
+import { hero, profile } from "@/lib/content"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
-const description = `${profile.role} in ${profile.location}. ${profile.summary}`
+const description = `${profile.role} in ${profile.location}. ${hero.intro}`
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.bibesh-timalsina.me"),
-  title: `${profile.name} — ${profile.role}`,
+  title: `${profile.name} · ${profile.role}`,
   description,
   openGraph: {
     title: profile.name,
@@ -36,7 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <Topography />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   )
