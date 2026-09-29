@@ -3,6 +3,7 @@
 import { motion } from "motion/react"
 
 import { ease } from "@/components/motion"
+import { ProjectVisual } from "@/components/project-visuals"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { Project } from "@/lib/content"
@@ -31,6 +32,11 @@ export function ProjectExplorer({ projects }: { projects: Project[] }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease }}
           >
+            {p.visual && (
+              <div className="mb-8">
+                <ProjectVisual kind={p.visual} />
+              </div>
+            )}
             <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
               <span>{p.kind}</span>
               <Badge variant="secondary">{p.status}</Badge>

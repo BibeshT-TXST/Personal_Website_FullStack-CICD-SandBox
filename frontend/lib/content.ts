@@ -16,11 +16,12 @@ export const profile = {
 } as const
 
 export const hero = {
+  focus: ["Healthcare", "Secure AI"] as string[],
   greeting: "Hi, I'm Bibesh.",
   headline: "I like the parts of software nobody notices until they break.",
   intro:
     "I study Computer Science and Data Analytics at Texas State as a first generation college student. I spend my days on the university library's systems team and my nights teaching models to see. Lately both have pulled me toward healthcare and secure AI.",
-  meta: "San Marcos, Texas · Open to relocation",
+  meta: "San Marcos, Texas",
 }
 
 export const chapters = {
@@ -48,6 +49,7 @@ export const chapters = {
 
 export type Project = {
   name: string
+  visual?: "retina" | "redaction"
   kind: string
   status: string
   summary: string
@@ -59,6 +61,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     name: "SightX",
+    visual: "retina",
     kind: "Healthcare · Computer vision",
     status: "Live, moving to AWS",
     summary:
@@ -73,6 +76,7 @@ export const projects: Project[] = [
   },
   {
     name: "ScrubX",
+    visual: "redaction",
     kind: "Healthcare · AI security",
     status: "In progress",
     summary:

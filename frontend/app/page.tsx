@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { FileTextIcon, MailIcon, MapPinIcon, MoonIcon, SunIcon } from "lucide-react"
 
+import { FocusOrbit } from "@/components/focus-orbit"
 import { GitHubIcon, LinkedInIcon } from "@/components/icons"
 import { Reveal } from "@/components/motion"
 import { ProjectExplorer } from "@/components/project-explorer"
@@ -28,7 +29,7 @@ export default function Home() {
         <Section id="writing" label="Writing" title="Notes from the build.">
           <Writing />
         </Section>
-        <Section id="about" label="About">
+        <Section id="about">
           <About />
         </Section>
         <Contact />
@@ -81,16 +82,18 @@ function Hero() {
           </div>
         </Reveal>
         <Reveal delay={0.1} className="order-first md:order-last">
-          <div className="size-32 rounded-full border bg-background p-1.5 sm:size-40 md:size-72 md:p-2 lg:size-80">
-            <Image
-              src={headshot}
-              alt={`Portrait of ${profile.name}`}
-              priority
-              placeholder="blur"
-              sizes="(min-width: 1024px) 320px, (min-width: 768px) 288px, 160px"
-              className="size-full rounded-full object-cover"
-            />
-          </div>
+          <FocusOrbit focus={hero.focus}>
+            <div className="relative size-32 rounded-full border bg-background p-1.5 sm:size-40 md:size-72 md:p-2 lg:size-80">
+              <Image
+                src={headshot}
+                alt={`Portrait of ${profile.name}`}
+                priority
+                placeholder="blur"
+                sizes="(min-width: 1024px) 320px, (min-width: 768px) 288px, 160px"
+                className="size-full rounded-full object-cover"
+              />
+            </div>
+          </FocusOrbit>
         </Reveal>
       </div>
     </section>
@@ -104,21 +107,21 @@ function Section({
   children,
 }: {
   id: string
-  label: string
+  label?: string
   title?: string
   children: React.ReactNode
 }) {
   return (
     <section id={id} className={`${container} py-16 md:py-24`}>
-      <Reveal>
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
-        {title && (
-          <h2 className="mt-4 max-w-2xl text-3xl leading-tight font-semibold tracking-tight text-balance md:text-5xl">
-            {title}
+      {label && title && (
+        <Reveal className="mb-10 md:mb-14">
+          {/* Label leads in ink, the line continues in grey. */}
+          <h2 className="max-w-4xl text-3xl leading-tight font-semibold tracking-tight md:text-5xl">
+            {label}. <span className="text-foreground/35">{title}</span>
           </h2>
-        )}
-      </Reveal>
-      <div className={title ? "mt-10 md:mt-14" : "mt-6"}>{children}</div>
+        </Reveal>
+      )}
+      {children}
     </section>
   )
 }
@@ -242,7 +245,7 @@ function Contact() {
             </Button>
             <Button asChild variant="outline" className={ghost}>
               <a href={resumeHref} download>
-                <FileTextIcon /> Résumé
+                <FileTextIcon /> Resume
               </a>
             </Button>
             <Button asChild variant="outline" className={ghost}>
@@ -266,12 +269,6 @@ function Footer() {
   return (
     <footer className={`${container} flex flex-col gap-2 py-8 text-sm text-muted-foreground sm:flex-row sm:justify-between`}>
       <p>© {new Date().getFullYear()} {profile.name}</p>
-      <p>
-        Built with Next.js, shadcn/ui and Motion ·{" "}
-        <a href={profile.links.source} className="underline underline-offset-4 hover:text-foreground">
-          Source
-        </a>
-      </p>
     </footer>
   )
 }
