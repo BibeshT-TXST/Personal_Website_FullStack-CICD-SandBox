@@ -20,7 +20,7 @@ export default function Home() {
       <SiteHeader />
       <main id="top">
         <Hero />
-        <Section id="experience" label="Now" title="days on a team, nights on my own">
+        <Section id="experience" label="What I am working on" title="">
           <Chapters />
         </Section>
         <Section id="projects" label="Projects" title="things I've built and why">

@@ -19,10 +19,10 @@ export const profile = {
 
 export const hero = {
   focus: ["Healthcare", "AI", "Cloud", "Security"] as string[],
-  greeting: "Hi, I'm Bibesh.",
-  headline: "I like the parts of software nobody notices until they break",
+  greeting: "Hi, I am Bibesh.",
+  headline: "I build AI systems people can trust",
   intro:
-    "I study Computer Science and Data Analytics at Texas State as a first generation college student. I spend my days on the university library's systems team and my nights teaching models to see. Lately both have pulled me toward healthcare, AI and the cloud, with security built in.",
+    "I am a first-generation Computer Science student at Texas State. I work on the university library's systems team, and when I'm not there, I'm usually building something with AI. Lately that's pulled me toward healthcare and the cloud, where getting security right really matters.",
   meta: "San Marcos, Texas",
 }
 
@@ -32,8 +32,8 @@ export const chapters = {
     where: "Systems team, Texas State University Libraries",
     since: "Since Dec 2025",
     body: [
-      "I work alongside two senior engineers on the tools the library runs on. My first real assignment was the backend for a travel request app that more than a hundred staff now use, and it cut their wait by about a third.",
-      "Since then I've rebuilt an aging inventory tool into a proper web app behind campus sign on, and written the login system three of our projects now share. My favorite afternoon so far was chasing duplicate records through a live database until one query gave itself away.",
+      "I build internal tools with two senior engineers on the library's systems team. My first big project was the backend for a travel request app that more than a hundred staff now use, and it cut their wait by about a third.",
+      "Since then I've rebuilt an aging inventory tool into a proper web app behind campus sign-on, set up the pipelines that test and ship our code, and written the login system three of our projects now share. My favorite afternoon so far was chasing a data duplication error in a production flask backend server.",
     ],
   },
   night: {
@@ -41,12 +41,13 @@ export const chapters = {
     where: "Personal projects and a build blog",
     since: "Always",
     body: [
-      "At home I get to be a researcher. I trained an eye disease classifier on my own laptop without renting a single GPU, turned it into a working screening app, and I'm now rebuilding it on AWS one service at a time.",
-      "I write about every step, including the ones that failed. Those tend to be the most useful posts.",
+      "Most of my own time goes into healthcare projects. SightX screens retinal photos for signs of diabetic eye disease. I trained the model on my laptop, tuned it to lean toward catching disease rather than missing it, and I'm now moving it to AWS one piece at a time.",
+      "Right now I'm also building ScrubX, a gateway that lets hospitals use AI without patient data leaving the building. It swaps out sensitive details before a prompt goes out and puts them back when the answer comes in.",
+      "Outside of that, I build and maintain the website for the Association of Statistics and Analytics, a student club at Texas State. And I write about every step on my blog, including the ones that failed. Those tend to be the most useful posts.",
     ],
   },
   before:
-    "Before this I spent two years as a STEM research coach at the library, helping more than 700 students find sources worth trusting. It taught me to explain hard things simply, which I still lean on every time I open a pull request. These days I also look after the website for my campus statistics club.",
+    "Before this I spent two years as a STEM research coach at the library, helping more than 700 students find sources worth trusting. It taught me to explain hard things simply, which I still lean on every time I open a pull request.",
 }
 
 export type Project = {
@@ -142,8 +143,8 @@ export const writing = {
 export const about = {
   values: ["Honor", "Authenticity", "Consistency"],
   body: [
-    "Those three words sit at the top of my GitHub, and they're the standard I try to hold my work to. I would rather ship something small and solid than something big and fragile, then come back to redesign, rethink and refine it.",
-    "Away from the keyboard I'm usually outside, somewhere old and quiet: a temple, a trail, a tree that has been standing for centuries. The line in my Instagram bio says it better than I can. Seek the temple within.",
+    "I put those three words at the top of my GitHub, and I try to live up to them in my work. To me they mean being honest about what works and what doesn't, building things the way I said I would, and showing up the next day to make them a little better.",
+    "When I'm not building, I'm usually outside somewhere old and quiet. A temple, a trail, a tree that's been standing for hundreds of years. Places like that remind me that anything worth building takes time.",
   ],
   education: "B.S. Computer Science and Data Analytics, Texas State University, class of 2027",
   toolbox: "Python, TypeScript, SQL, React, Next.js, Node.js, Flask, FastAPI, PostgreSQL, Docker, AWS, PyTorch",
@@ -151,5 +152,5 @@ export const about = {
 
 export const contact = {
   heading: "Have something worth building?",
-  body: "I'm looking for early career roles, and I'm always up for a team project or a hackathon. Email is the fastest way to reach me.",
+  body: "I am looking for internships and early-career roles, especially in AI and healthcare. I am also always up for a team project or a hackathon. Email is the fastest way to reach me, and I'll get back to you.",
 }
