@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description,
     url: "/",
     siteName: profile.name,
-    images: [{ url: "/headshot.jpg", width: 960, height: 1200 }],
+    images: [{ url: "/headshot.jpg", width: 400, height: 400 }],
     type: "website",
   },
   twitter: { card: "summary", title: profile.name, description },

@@ -42,7 +42,7 @@ function ResumeButton({ className }: { className?: string }) {
   return (
     <Button asChild className={cn("h-11 rounded-full px-5 text-[15px]", className)}>
       <a href={resumeHref} download>
-        <FileTextIcon /> Download résumé
+        <FileTextIcon /> Download Resume
       </a>
     </Button>
   )
@@ -88,7 +88,7 @@ function Hero() {
               priority
               placeholder="blur"
               sizes="(min-width: 1024px) 320px, (min-width: 768px) 288px, 160px"
-              className="size-full rounded-full object-cover object-[48%_45%]"
+              className="size-full rounded-full object-cover"
             />
           </div>
         </Reveal>
