@@ -1,12 +1,22 @@
 "use client"
 
 import { motion } from "motion/react"
-import { HeartPulseIcon, ShieldCheckIcon, type LucideIcon } from "lucide-react"
+import { BrainCircuitIcon, CloudIcon, HeartPulseIcon, ShieldCheckIcon, type LucideIcon } from "lucide-react"
 
 const icons: Record<string, LucideIcon> = {
   Healthcare: HeartPulseIcon,
-  "Secure AI": ShieldCheckIcon,
+  AI: BrainCircuitIcon,
+  Cloud: CloudIcon,
+  Security: ShieldCheckIcon,
 }
+
+// Where each tag sits on the ring (desktop): the four diagonals around the photo.
+const spots = [
+  "top-[3%] left-[22%]",
+  "top-[3%] left-[78%]",
+  "top-[97%] left-[78%]",
+  "top-[97%] left-[22%]",
+]
 
 function Chip({ label, delay = 0 }: { label: string; delay?: number }) {
   const Icon = icons[label] ?? ShieldCheckIcon
@@ -22,7 +32,7 @@ function Chip({ label, delay = 0 }: { label: string; delay?: number }) {
 }
 
 // The headshot sits inside a slow orbit: a turning dashed ring, one small satellite,
-// and the two fields I'm focused on pinned to the ring (beside the photo on mobile).
+// and the fields I'm focused on pinned to the ring (beside the photo on mobile).
 export function FocusOrbit({ focus, children }: { focus: string[]; children: React.ReactNode }) {
   const spin = (duration: number, dir = 1) => ({
     animate: { rotate: 360 * dir },
@@ -41,16 +51,15 @@ export function FocusOrbit({ focus, children }: { focus: string[]; children: Rea
           <span className="absolute top-0 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground" />
         </motion.div>
         {children}
-        <span className="absolute top-[3%] left-[22%] hidden -translate-x-1/2 -translate-y-1/2 md:block">
-          <Chip label={focus[0]} />
-        </span>
-        <span className="absolute top-[97%] left-[78%] hidden -translate-x-1/2 -translate-y-1/2 md:block">
-          <Chip label={focus[1]} delay={2.5} />
-        </span>
+        {focus.slice(0, spots.length).map((f, i) => (
+          <span key={f} className={`absolute hidden -translate-x-1/2 -translate-y-1/2 md:block ${spots[i]}`}>
+            <Chip label={f} delay={i * 1.25} />
+          </span>
+        ))}
       </div>
-      <div className="flex flex-col items-start gap-2 md:hidden">
+      <div className="flex flex-col items-start gap-1.5 md:hidden">
         {focus.map((f, i) => (
-          <Chip key={f} label={f} delay={i * 2.5} />
+          <Chip key={f} label={f} delay={i * 1.25} />
         ))}
       </div>
     </div>

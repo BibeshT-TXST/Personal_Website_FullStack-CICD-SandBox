@@ -18,11 +18,11 @@ export const profile = {
 } as const
 
 export const hero = {
-  focus: ["Healthcare", "Secure AI"] as string[],
+  focus: ["Healthcare", "AI", "Cloud", "Security"] as string[],
   greeting: "Hi, I'm Bibesh.",
   headline: "I like the parts of software nobody notices until they break",
   intro:
-    "I study Computer Science and Data Analytics at Texas State as a first generation college student. I spend my days on the university library's systems team and my nights teaching models to see. Lately both have pulled me toward healthcare and secure AI.",
+    "I study Computer Science and Data Analytics at Texas State as a first generation college student. I spend my days on the university library's systems team and my nights teaching models to see. Lately both have pulled me toward healthcare, AI and the cloud, with security built in.",
   meta: "San Marcos, Texas",
 }
 
