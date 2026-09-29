@@ -1,678 +1,275 @@
-"use client";
+import Image from "next/image"
+import { FileTextIcon, MailIcon, MapPinIcon, MoonIcon, SunIcon } from "lucide-react"
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TextPlugin } from "gsap/TextPlugin";
-import Image from "next/image";
+import { FocusOrbit } from "@/components/focus-orbit"
+import { GitHubIcon, LinkedInIcon } from "@/components/icons"
+import { Reveal } from "@/components/motion"
+import { ProjectExplorer } from "@/components/project-explorer"
+import { SiteHeader } from "@/components/site-header"
+import { Button } from "@/components/ui/button"
+import { about, chapters, contact, hero, profile, projects, writing } from "@/lib/content"
+import { cn } from "@/lib/utils"
+import headshot from "@/public/headshot.jpg"
 
-//Test
-const act1Slides = [
-  { type: 'image', src: './ME.jpg', text: '...a Traveler & Explorer' },
-  { type: 'image', src: './Work.jpg', text: '...a Developer who loves GitHub & Teamwork' },
-  { type: 'image', src: './Belief_Books.jpg', text: '...a Reader of Books, Old & New.' },
-  { type: 'image', src: './Boyz.jpg', text: '...someone who believes friendship is everything.' },
-  { type: 'video', src: './IMG_9265.mov', text: '...a Videographer' },
-  { type: 'video', src: './Window.mov', text: '...and I believe every tool has its purpose.' },
-];
+const resumeHref = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${profile.resume}`
+const container = "mx-auto max-w-5xl px-5 sm:px-8"
 
 export default function Home() {
-  const books = [
-    { title: "Bhagavad Gita", img: "./Books/bhagavad-gita.jpg" },
-    { title: "Count of Monte Cristo", img: "./Books/count of montecristo.jpeg" },
-    { title: "White Nights", img: "./Books/WHite_knights.jpeg" },
-    { title: "12 Rules for Life", img: "./Books/12 rules for life.png" },
-    { title: "A Song of Ice and Fire", img: "./Books/Song of ice and fire.webp" },
-    { title: "The Great Gatsby", img: "./Books/the great gatsby.jpeg" },
-    { title: "Diary of a Wimpy Kid", img: "./Books/Diary of the wimpy.jpg" },
-    { title: "How to Do Nothing", img: "./Books/Will do nothing.jpg" }
-  ];
-
-  const games = [
-    { title: "GTA Vice City", img: "./Games & Movies/vice city.png" },
-    { title: "Assassin's Creed 2", img: "./Games & Movies/Assassins_Creed_2.jpeg" },
-    { title: "Red Dead Redemption II", img: "./Games & Movies/Red_Dead_Redemption_II.jpg" },
-    { title: "GTA V", img: "./Games & Movies/grove-gang-gta-v.webp" },
-    { title: "Detroit Become Human", img: "./Games & Movies/Detroit_Become_Human_Cover.webp" }
-  ];
-
-  const movies = [
-    { title: "The Dark Knight", img: "./Games & Movies/Dark Knight.jpeg" },
-    { title: "Pirates of the Caribbean", img: "./Games & Movies/At The Words End.jpeg" },
-    { title: "Django Unchained", img: "./Games & Movies/django unchained.jpeg" },
-    { title: "The Shawshank Redemption", img: "./Games & Movies/sawshank_redemption.jpeg" },
-    { title: "Interstellar", img: "./Games & Movies/Interstellar.jpeg" },
-    { title: "The Prestige", img: "./Games & Movies/The prestiage.jpeg" }
-  ];
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [currentAct1Slide, setCurrentAct1Slide] = useState(0);
-  const [expandedBento, setExpandedBento] = useState<string | null>(null);
-
-  const toggleBento = (id: string) => {
-    setExpandedBento(prev => prev === id ? null : id);
-  };
-
-  useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setCurrentAct1Slide((prev) => (prev + 1) % act1Slides.length);
-    }, 3500);
-    return () => clearInterval(slideInterval);
-  }, []);
-
-  useEffect(() => {
-    // Register GSAP plugins
-    gsap.registerPlugin(ScrollTrigger, TextPlugin);
-
-    // Act 1 Background Parallax
-    gsap.to(".act-1-bg", {
-      scrollTrigger: {
-        trigger: "#act-1",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-      y: 200,
-      ease: "none",
-    });
-
-    // Fade out Descend arrow on scroll
-    gsap.to(".descend-arrow", {
-      scrollTrigger: {
-        trigger: "#act-1",
-        start: "top top",
-        end: "30% top",
-        scrub: true,
-      },
-      opacity: 0,
-      ease: "none",
-    });
-
-    // Act 1 Typing Animation
-    const act1Title = document.querySelector(".terminal-type");
-    if (act1Title) {
-      gsap.to(act1Title, {
-        duration: 2,
-        text: act1Title.getAttribute("data-text") || "",
-        ease: "none",
-        delay: 0.5,
-        onComplete: () => act1Title.classList.add("cursor-blink"),
-      });
-    }
-
-    gsap.fromTo(
-      ".act-1-text:not(.terminal-type)",
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        ease: "power3.out",
-        delay: 2.5,
-      }
-    );
-
-    // Act 2 Animations (Bento Box fade-in)
-    const act2Tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#act-2",
-        start: "top 70%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse",
-      },
-    });
-
-    const act2Title = document.querySelector(".terminal-type-act2");
-    if (act2Title) {
-      act2Tl
-        .to(act2Title, {
-          duration: 1.5,
-          text: act2Title.getAttribute("data-text") || "",
-          ease: "none",
-          onComplete: () => act2Title.classList.add("cursor-blink"),
-        })
-        .fromTo(
-          ".bento-box",
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" }
-        );
-    }
-
-    // Machine Room Animations
-    gsap.fromTo(
-      ".machine-content > div",
-      { opacity: 0, y: 50 },
-      {
-        scrollTrigger: {
-          trigger: "#machine-room",
-          start: "top 70%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.3,
-        ease: "power2.out",
-      }
-    );
-
-    // Act 3 Body Background Wipe & Elements
-    gsap.to(document.body, {
-      scrollTrigger: {
-        trigger: "#act-3",
-        start: "top 50%",
-        end: "top 20%",
-        scrub: true,
-        onEnter: () => (document.body.style.backgroundColor = "#E1DCC9"),
-        onLeaveBack: () => (document.body.style.backgroundColor = "#000000"),
-      },
-      backgroundColor: "#E1DCC9",
-      duration: 1,
-    });
-
-    const act3Tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#act-3",
-        start: "top 60%",
-        toggleActions: "play none none reverse",
-      },
-    });
-
-    act3Tl
-      .fromTo(
-        ".act-3-header",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
-      )
-      .fromTo(
-        ".act-3-card",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power3.out" },
-        "-=0.5"
-      );
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
-
   return (
-    <main className="relative w-full" ref={containerRef}>
+    <>
+      <SiteHeader />
+      <main id="top">
+        <Hero />
+        <Section id="experience" label="Now" title="days on a team, nights on my own">
+          <Chapters />
+        </Section>
+        <Section id="projects" label="Projects" title="things I've built and why">
+          <ProjectExplorer projects={projects} />
+        </Section>
+        <Section id="writing" label="Writing" title="notes from the build">
+          <Writing />
+        </Section>
+        <Section id="about">
+          <About />
+        </Section>
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  )
+}
 
-      {/* Act I: The Explorer */}
-      <section
-        className="relative w-full h-[100vh] flex flex-col justify-center items-center overflow-hidden"
-        id="act-1"
-      >
-        <div className="absolute inset-0 z-0 overflow-hidden bg-black act-1-bg">
-          {act1Slides.map((slide, index) => (
-            <div
-              key={slide.src}
-              className={`absolute inset-0 transition-opacity duration-1000 ${index === currentAct1Slide ? "opacity-50" : "opacity-0"
-                }`}
-            >
-              {slide.type === 'image' ? (
-                <div className="absolute inset-0 w-full h-full">
-                  <Image src={slide.src} alt="Background slide" fill className="object-cover" />
-                </div>
-              ) : (
-                <video src={slide.src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
-              )}
+function ResumeButton({ className }: { className?: string }) {
+  return (
+    <Button asChild className={cn("h-11 rounded-full px-5 text-[15px]", className)}>
+      <a href={resumeHref} download>
+        <FileTextIcon /> Download Resume
+      </a>
+    </Button>
+  )
+}
+
+function Hero() {
+  return (
+    <section className={`${container} pt-10 pb-8 md:pt-20 md:pb-12`}>
+      <div className="grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-16">
+        <Reveal>
+          <p className="text-lg text-muted-foreground">{hero.greeting}</p>
+          <h1 className="mt-3 max-w-2xl text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            {hero.headline}
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">{hero.intro}</p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <ResumeButton />
+            <Button asChild variant="outline" className="h-11 rounded-full bg-background/70 px-5 text-[15px]">
+              <a href={`mailto:${profile.email}`}>
+                <MailIcon /> Say hello
+              </a>
+            </Button>
+          </div>
+          <div className="mt-8 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5">
+              <MapPinIcon className="size-4" /> {hero.meta}
+            </span>
+            <span className="flex items-center gap-4">
+              <a href={profile.links.github} className="transition-colors hover:text-foreground" aria-label="GitHub">
+                <GitHubIcon className="size-4.5" />
+              </a>
+              <a href={profile.links.linkedin} className="transition-colors hover:text-foreground" aria-label="LinkedIn">
+                <LinkedInIcon className="size-4.5" />
+              </a>
+            </span>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1} className="order-first md:order-last">
+          <FocusOrbit focus={hero.focus}>
+            <div className="relative size-32 rounded-full border bg-background p-1.5 sm:size-40 md:size-72 md:p-2 lg:size-80">
+              <Image
+                src={headshot}
+                alt={`Portrait of ${profile.name}`}
+                priority
+                placeholder="blur"
+                sizes="(min-width: 1024px) 320px, (min-width: 768px) 288px, 160px"
+                className="size-full rounded-full object-cover"
+              />
             </div>
+          </FocusOrbit>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function Section({
+  id,
+  label,
+  title,
+  children,
+}: {
+  id: string
+  label?: string
+  title?: string
+  children: React.ReactNode
+}) {
+  return (
+    <section id={id} className={`${container} py-16 md:py-24`}>
+      {label && title && (
+        <Reveal className="mb-10 md:mb-14">
+          {/* One style for every heading: label, comma, the rest of the line. */}
+          <h2 className="max-w-4xl text-3xl leading-tight font-semibold tracking-tight md:text-5xl">
+            {label}, {title}
+          </h2>
+        </Reveal>
+      )}
+      {children}
+    </section>
+  )
+}
+
+function Chapters() {
+  const panels = [
+    { ...chapters.day, Icon: SunIcon, dark: false },
+    { ...chapters.night, Icon: MoonIcon, dark: true },
+  ]
+  return (
+    <>
+      <div className="grid gap-4 md:grid-cols-2">
+        {panels.map(({ label, where, since, body, Icon, dark }, i) => (
+          <Reveal
+            key={label}
+            delay={i * 0.08}
+            className={cn(
+              "rounded-3xl p-7 md:p-9",
+              dark ? "bg-foreground text-background" : "border bg-background/80 backdrop-blur-[2px]"
+            )}
+          >
+            <div
+              className={cn(
+                "flex items-center justify-between text-sm",
+                dark ? "text-background/60" : "text-muted-foreground"
+              )}
+            >
+              <span className="inline-flex items-center gap-2">
+                <Icon className="size-4" /> {label}
+              </span>
+              <span>{since}</span>
+            </div>
+            <h3 className="mt-6 text-xl font-semibold tracking-tight">{where}</h3>
+            <div className={cn("mt-4 space-y-4 leading-relaxed", dark ? "text-background/75" : "text-foreground/75")}>
+              {body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+          </Reveal>
+        ))}
+      </div>
+      <Reveal>
+        <p className="mt-10 max-w-3xl leading-relaxed text-muted-foreground md:text-lg">{chapters.before}</p>
+      </Reveal>
+    </>
+  )
+}
+
+function Writing() {
+  return (
+    <Reveal>
+      <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
+        {writing.intro}{" "}
+        <a href={profile.links.blog} className="font-medium text-foreground underline underline-offset-4">
+          Visit the blog
+        </a>
+      </p>
+      <ul className="mt-8 border-t">
+        {writing.posts.map((post) => (
+          <li key={post.href} className="border-b">
+            <a href={post.href} className="group flex items-baseline justify-between gap-6 py-5">
+              <span className="text-lg font-medium tracking-tight decoration-foreground/30 underline-offset-[6px] group-hover:underline">
+                {post.title}
+              </span>
+              <span className="shrink-0 text-sm text-muted-foreground tabular-nums">{post.date}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Reveal>
+  )
+}
+
+function About() {
+  return (
+    <Reveal>
+      <h2 className="text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-6xl">
+        {about.values.map((v, i) => (
+          <span key={v} className="block">
+            {v}
+            {i < about.values.length - 1 && ","}
+          </span>
+        ))}
+      </h2>
+      <div className="mt-10 grid gap-10 md:grid-cols-[1fr_280px] md:gap-16">
+        <div className="max-w-2xl space-y-5 text-lg leading-relaxed text-foreground/80">
+          {about.body.map((p) => (
+            <p key={p}>{p}</p>
           ))}
         </div>
-
-        {/* Backdrop for text to ensure readability */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none mix-blend-multiply"></div>
-
-        <div className="relative z-10 w-full max-w-content-max-width mx-auto px-gutter text-center flex flex-col items-center justify-center gap-narrative-gap drop-shadow-2xl h-full mt-12">
-          <h1
-            className="font-display-xl text-display-xl text-primary act-1-text font-label-mono terminal-type -translate-y-12 md:-translate-y-20 hero-title"
-            data-text="Hello, I am Bibesh"
-          ></h1>
-          <div className="relative w-full max-w-2xl mt-8 h-[140px] md:h-[100px] flex items-center justify-center mx-auto act-1-text hero-subtitle-box">
-            {act1Slides.map((slide, index) => (
-              <p
-                key={index}
-                className={`absolute inset-0 font-body-lg text-body-lg text-on-surface-variant font-label-mono text-label-mono uppercase tracking-widest flex items-center justify-center transition-opacity duration-1000 hero-subtitle-text ${index === currentAct1Slide ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                  }`}
-              >
-                <span className="bg-black/60 md:bg-black/40 p-3 md:p-6 rounded-lg backdrop-blur-md border border-warm-umber/20 text-[0.7rem] md:text-sm">
-                  {slide.text}
-                </span>
-              </p>
-            ))}
+        <dl className="space-y-6 text-sm md:border-l md:pl-8">
+          <div>
+            <dt className="font-medium">Education</dt>
+            <dd className="mt-1.5 leading-relaxed text-muted-foreground">{about.education}</dd>
           </div>
-        </div>
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce opacity-50 descend-arrow">
-          <span className="font-label-mono text-label-mono text-on-surface-variant tracking-widest uppercase text-[10px]">
-            Descend
-          </span>
-          <span className="material-symbols-outlined text-outline">arrow_downward</span>
-        </div>
-      </section>
-
-      {/* Act II: Experience & Projects (Bento Box) */}
-      <section
-        className="relative w-full min-h-[100vh] flex flex-col justify-center py-section-v-padding overflow-hidden z-20"
-        id="act-2"
-      >
-        <div className="w-full max-w-content-max-width mx-auto px-gutter relative z-10">
-          <div className="mb-12">
-            <h2
-              className="font-headline-lg text-headline-lg text-deep-espresso font-label-mono terminal-type-act2 inline-block"
-              data-text="As A Student & Software Developer I Have Done..."
-            ></h2>
-            <div className="w-full max-w-sm h-px bg-pitch-black/30 my-4"></div>
+          <div>
+            <dt className="font-medium">Toolbox</dt>
+            <dd className="mt-1.5 leading-relaxed text-muted-foreground">{about.toolbox}</dd>
           </div>
+        </dl>
+      </div>
+    </Reveal>
+  )
+}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-            {/* Left Side: Work Experience */}
-            <div className="flex flex-col gap-6">
-              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4 flex items-center gap-2">
-                <span className="material-symbols-outlined text-xl">work</span> Work
-              </h3>
-
-              {/* Bento Box 1 */}
-              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div
-                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('work-1')}
-                >
-                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Full-Stack Dev, Student Worker</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2025 - Present</span>
-                  </div>
-                  <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">Texas State University Libraries</p>
-
-                  {/* Desktop: hover-to-expand */}
-                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
-                    <div className="overflow-hidden">
-                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Built and shipped a production Next.js asset management web application, replacing a legacy .exe application and manual logs, saving ~13 hrs/week across 7 staff managing 500+ devices.</li>
-                        <li>Built a JWT cookie-based authentication system with a custom Next.js proxy, Argon2 client-side hashing, and session guards across 4 route groups.</li>
-                        <li>Built a 14-column MUI DataGrid with inline row editing, debounced search, and batch edit/cancel.</li>
-                        <li>Co-designed a SQL guardrail patching a live production data-integrity vulnerability in a Flask backend.</li>
-                        <li>Co-deployed the application to a Red Hat Enterprise Linux server via a custom GitHub Actions CI/CD pipeline.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'work-1' ? 'expanded' : ''}`}>
-                    <div>
-                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Built and shipped a production Next.js asset management web application, replacing a legacy .exe application and manual logs, saving ~13 hrs/week across 7 staff managing 500+ devices.</li>
-                        <li>Built a JWT cookie-based authentication system with a custom Next.js proxy, Argon2 client-side hashing, and session guards across 4 route groups.</li>
-                        <li>Built a 14-column MUI DataGrid with inline row editing, debounced search, and batch edit/cancel.</li>
-                        <li>Co-designed a SQL guardrail patching a live production data-integrity vulnerability in a Flask backend.</li>
-                        <li>Co-deployed the application to a Red Hat Enterprise Linux server via a custom GitHub Actions CI/CD pipeline.</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'work-1' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'work-1' ? 'Tap to collapse' : 'Tap to expand'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bento Box 2 */}
-              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div
-                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('work-2')}
-                >
-                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">QA Tester, Intern</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2024 - April 2025</span>
-                  </div>
-                  <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">MySQUEGG</p>
-
-                  {/* Desktop: hover-to-expand */}
-                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
-                    <div className="overflow-hidden">
-                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Built 12 unit tests using JavaScript, WebDriverIO, and Appium server; used Android Studio to validate UI functionality, identifying 31 bugs across 2 mobile applications.</li>
-                        <li>Flagged 37 missing accessibility identifiers through automated testing.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'work-2' ? 'expanded' : ''}`}>
-                    <div>
-                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Built 12 unit tests using JavaScript, WebDriverIO, and Appium server; used Android Studio to validate UI functionality, identifying 31 bugs across 2 mobile applications.</li>
-                        <li>Flagged 37 missing accessibility identifiers through automated testing.</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'work-2' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'work-2' ? 'Tap to collapse' : 'Tap to expand'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bento Box 3 */}
-              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div
-                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('work-3')}
-                >
-                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Research Consultant</h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Feb 2024 - Dec 2025</span>
-                  </div>
-                  <p className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4">Texas State University Libraries</p>
-
-                  {/* Desktop: hover-to-expand */}
-                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
-                    <div className="overflow-hidden">
-                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Coached 700+ undergraduate students on research techniques and finding relevant research papers.</li>
-                        <li>Co-developed a structured Research Coach FAQ with 3 colleagues using Texas State University's CMS.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'work-3' ? 'expanded' : ''}`}>
-                    <div>
-                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Coached 700+ undergraduate students on research techniques and finding relevant research papers.</li>
-                        <li>Co-developed a structured Research FAQ with 3 colleagues using Texas State University's CMS.</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'work-3' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'work-3' ? 'Tap to collapse' : 'Tap to expand'}
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Right Side: Projects */}
-            <div className="flex flex-col gap-6 mt-8 lg:mt-0">
-              <h3 className="font-label-mono text-deep-espresso uppercase tracking-widest text-lg mb-4 flex items-center gap-2">
-                <span className="material-symbols-outlined text-xl">rocket_launch</span> Projects
-              </h3>
-
-              {/* Project Bento Box 1 */}
-              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div
-                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('project-1')}
-                >
-                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">SightX <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Feb 2026 - Mar 2026</span>
-                  </div>
-                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
-                    <p>Diabetic Retinopathy Detection System</p>
-                    <div className="flex gap-3 mt-1">
-                      <a href="https://github.com/BibeshT-TXST/SightX" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
-                      <a href="https://darkmatterstech.blogspot.com/" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>Blog</a>
-                    </div>
-                  </div>
-
-                  {/* Desktop: hover-to-expand */}
-                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
-                    <div className="overflow-hidden">
-                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Designed a post-processing safety layer (temperature scaling, Bayesian prior correction, asymmetric cost matrix) that converts raw model logits into 3 clinically actionable triage tiers, prioritizing false-negative avoidance over raw accuracy.</li>
-                        <li>Trained a ResNet-50 V2 classifier on 35K retinal images to κ = 0.6454 entirely on local Apple M4 hardware with zero cloud compute, using CLAHE preprocessing, cosine annealing with warmup, and gradual unfreezing.</li>
-                        <li>Built a 108-iteration test-time augmentation ensemble that runs stochastic transforms per inference pass and returns the modal prediction with averaged confidence, hardening the system against camera artifacts at inference time.</li>
-                        <li>Shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with ephemeral in-memory image handling so no patient data is ever written to disk, plus JWT and row-level security via Supabase, deployed with a single command to Red Hat Enterprise Linux servers.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'project-1' ? 'expanded' : ''}`}>
-                    <div>
-                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Designed a post-processing safety layer (temperature scaling, Bayesian prior correction, asymmetric cost matrix) that converts raw model logits into 3 clinically actionable triage tiers, prioritizing false-negative avoidance over raw accuracy.</li>
-                        <li>Trained a ResNet-50 V2 classifier on 35K retinal images to κ = 0.6454 entirely on local Apple M4 hardware with zero cloud compute, using CLAHE preprocessing, cosine annealing with warmup, and gradual unfreezing.</li>
-                        <li>Built a 108-iteration test-time augmentation ensemble that runs stochastic transforms per inference pass and returns the modal prediction with averaged confidence, hardening the system against camera artifacts at inference time.</li>
-                        <li>Shipped a 3-container Docker microservices stack (React, Node.js, FastAPI) with ephemeral in-memory image handling so no patient data is ever written to disk, plus JWT and row-level security via Supabase, deployed with a single command to Red Hat Enterprise Linux servers.</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-1' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'project-1' ? 'Tap to collapse' : 'Tap to expand'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Project Bento Box 2 */}
-              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div
-                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('project-2')}
-                >
-                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Project-GitGud <a href="https://github.com/BibeshT-TXST/Project_GitGud" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Dec 2025 - Apr 2026</span>
-                  </div>
-                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
-                    <p>Containerized Inventory Platform</p>
-                    <div className="flex gap-3 mt-1">
-                      <a href="https://github.com/BibeshT-TXST/Project_GitGud" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
-                    </div>
-                  </div>
-
-                  {/* Desktop: hover-to-expand */}
-                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
-                    <div className="overflow-hidden">
-                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Eliminated &quot;works on my machine&quot; environment problem by packaging the system into 3 connected services (Docker Compose, Nginx, Express.js, PostgreSQL) with identical behavior from local dev to Red Hat Linux production server.</li>
-                        <li>Secured REST API routes and user accounts against brute-force and token-reuse attacks using Argon2 password hashing with server-side peppering, JWT authentication, and an in-memory token blacklist for instant logout revocation.</li>
-                        <li>Built a GitHub Actions CI/CD pipeline that runs Jest unit tests and Supertest API integration suites on every push, catching regressions before they reach production.</li>
-                        <li>Built a React 18 / Vite / MUI dashboard for real-time search, status filtering, and direct CSV export of inventory records.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
-                    <div>
-                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Eliminated &quot;works on my machine&quot; environment problem by packaging the system into 3 connected services (Docker Compose, Nginx, Express.js, PostgreSQL) with identical behavior from local dev to Red Hat Linux production server.</li>
-                        <li>Secured REST API routes and user accounts against brute-force and token-reuse attacks using Argon2 password hashing with server-side peppering, JWT authentication, and an in-memory token blacklist for instant logout revocation.</li>
-                        <li>Built a GitHub Actions CI/CD pipeline that runs Jest unit tests and Supertest API integration suites on every push, catching regressions before they reach production.</li>
-                        <li>Built a React 18 / Vite / MUI dashboard for real-time search, status filtering, and direct CSV export of inventory records.</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-2' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'project-2' ? 'Tap to collapse' : 'Tap to expand'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Project Bento Box 3 */}
-              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div
-                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('project-3')}
-                >
-                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">LLM-Gateway <a href="https://github.com/BibeshT-TXST/LLM-Gateway" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">Jul 2026 - Present</span>
-                  </div>
-                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
-                    <p>Self-Hosted Inference Gateway</p>
-                    <div className="flex gap-3 mt-1">
-                      <a href="https://github.com/BibeshT-TXST/LLM-Gateway" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider" onClick={(e) => e.stopPropagation()}>GitHub</a>
-                    </div>
-                  </div>
-
-                  {/* Desktop: hover-to-expand */}
-                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
-                    <div className="overflow-hidden">
-                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Building a self-hosted LLM gateway in Go with multi-provider routing (Gemini + local Ollama), circuit-breaker failover, and reversible-token PII redaction with SQLite-backed audit logging.</li>
-                        <li>Building the routing and cache layers with Prometheus metrics and a redacted-prompt-keyed cache to cut duplicate inference cost and latency.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'project-3' ? 'expanded' : ''}`}>
-                    <div>
-                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Building a self-hosted LLM gateway in Go with multi-provider routing (Gemini + local Ollama), circuit-breaker failover, and reversible-token PII redaction with SQLite-backed audit logging.</li>
-                        <li>Building the routing and cache layers with Prometheus metrics and a redacted-prompt-keyed cache to cut duplicate inference cost and latency.</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-3' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'project-3' ? 'Tap to collapse' : 'Tap to expand'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Project Bento Box 4 */}
-              <div className="relative w-full h-[140px] md:h-[160px] bento-box opacity-0 hover:z-50">
-                <div
-                  className="absolute top-0 left-0 w-full min-h-full bg-sandstone border border-pitch-black p-4 md:p-6 overflow-hidden group rounded-sm bento-hover-effect cursor-pointer md:cursor-default"
-                  onClick={() => toggleBento('project-4')}
-                >
-                  <div className="flex justify-between items-start gap-2 md:gap-4 mb-2">
-                    <h4 className="font-display-sm text-pitch-black text-sm md:text-base">Personal Website <a href="https://github.com/BibeshT-TXST/Personal_Website_FullStack-CICD-SandBox" target="_blank" className="inline-block hover:scale-110 transition-transform"><div className="github-square ml-1 -mt-1 opacity-100 transform-none relative top-0.5 inline-block"></div></a></h4>
-                    <span className="font-label-mono text-[10px] md:text-xs text-deep-espresso whitespace-nowrap glass-badge bg-pitch-black/5 px-2 py-1 rounded">2026 - Present</span>
-                  </div>
-                  <div className="font-label-mono text-xs md:text-sm text-deep-espresso mb-2 md:mb-4 flex flex-col gap-2">
-                    <p>Frontend & CI/CD Sandbox</p>
-                    <div className="flex gap-3 mt-1">
-                      <a href="https://github.com/BibeshT-TXST/Personal_Website_FullStack-CICD-SandBox" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-deep-espresso text-sandstone font-bold rounded active:bg-[#238636] active:text-white transition-colors duration-300 text-xs tracking-wider w-max" onClick={(e) => e.stopPropagation()}>GitHub</a>
-                    </div>
-                  </div>
-
-                  {/* Desktop: hover-to-expand */}
-                  <div className="bento-details-desktop grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr]">
-                    <div className="overflow-hidden">
-                      <ul className="font-label-mono text-sm leading-relaxed text-deep-espresso/80 space-y-3 list-disc pl-4 mt-2">
-                        <li>Developing a digital portfolio that serves as an active engineering sandbox to experiment with modern frontend architectures.</li>
-                        <li>Exploring advanced UI/UX concepts, including scroll-driven narratives and dynamic grid layouts, to craft a unique and engaging user experience.</li>
-                        <li>Establishing continuous integration and deployment workflows to create a reliable foundation for rapid, ongoing feature iteration.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Mobile: tap-to-expand */}
-                  <div className={`bento-details-mobile ${expandedBento === 'project-4' ? 'expanded' : ''}`}>
-                    <div>
-                      <ul className="font-label-mono text-xs leading-relaxed text-deep-espresso/80 space-y-2 list-disc pl-4 mt-2">
-                        <li>Developing a digital portfolio that serves as an active engineering sandbox to experiment with modern frontend architectures.</li>
-                        <li>Exploring advanced UI/UX concepts, including scroll-driven narratives and dynamic grid layouts, to craft a unique and engaging user experience.</li>
-                        <li>Establishing continuous integration and deployment workflows to create a reliable foundation for rapid, ongoing feature iteration.</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={`bento-tap-hint font-label-mono text-deep-espresso ${expandedBento === 'project-4' ? 'expanded' : ''}`}>
-                    <span className="chevron">▼</span> {expandedBento === 'project-4' ? 'Tap to collapse' : 'Tap to expand'}
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Act III: The Impact */}
-      <section
-        className="relative w-full min-h-[100vh] flex flex-col py-section-v-padding z-30 transition-colors duration-1000"
-        id="act-3"
-      >
-        <div className="w-full max-w-content-max-width mx-auto px-gutter mb-8 act-3-header">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-sandstone max-w-4xl act-3-heading">
-            But at the end of the day books, movies & video games <span className="text-warm-umber">are my escape</span>
+function Contact() {
+  const ghost =
+    "h-11 rounded-full border-background/25 bg-transparent px-5 text-[15px] text-background hover:bg-background/10 hover:text-background"
+  return (
+    <section id="contact" className="bg-foreground text-background">
+      <div className={`${container} py-20 md:py-28`}>
+        <Reveal>
+          <h2 className="max-w-2xl text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl">
+            {contact.heading}
           </h2>
-          <div className="w-16 md:w-24 h-1 bg-warm-umber mt-4 md:mt-6 mb-6"></div>
-          <p className="font-label-mono text-sandstone/70 max-w-2xl text-sm leading-relaxed">
-            Honestly, I just love a good story. When I'm not working, you'll usually find me getting way too invested in a video game, trying to finish a book in one sitting, or watching a movie that sticks with me for days. It's just how I unplug and recharge.
-          </p>
-        </div>
-
-        {/* Media Marquees */}
-        <div className="w-full flex flex-col gap-8 overflow-hidden relative z-10 py-8 marquee-container marquee-mask bg-pitch-black border-y border-warm-umber/30">
-
-          {/* Row 1: Books (Scroll Left) */}
-          <div className="flex w-max whitespace-nowrap animate-marquee-left marquee-speed-1">
-            {[...Array(6)].map((_, i) => (
-              <div key={`books-${i}`} className="flex gap-3 md:gap-6 px-2 md:px-3 min-w-max">
-                {books.map((book, idx) => (
-                  <div key={`book-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer marquee-card">
-                    <Image src={book.img} alt={book.title} fill sizes="(max-width: 767px) 128px, 192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
-                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm marquee-overlay">
-                      <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{book.title}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
+          <p className="mt-5 max-w-lg text-lg text-background/70">{contact.body}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild className="h-11 rounded-full bg-background px-5 text-[15px] text-foreground hover:bg-background/90">
+              <a href={`mailto:${profile.email}`}>
+                <MailIcon /> Email me
+              </a>
+            </Button>
+            <Button asChild variant="outline" className={ghost}>
+              <a href={resumeHref} download>
+                <FileTextIcon /> Resume
+              </a>
+            </Button>
+            <Button asChild variant="outline" className={ghost}>
+              <a href={profile.links.linkedin}>
+                <LinkedInIcon className="size-4" /> LinkedIn
+              </a>
+            </Button>
+            <Button asChild variant="outline" className={ghost}>
+              <a href={profile.links.github}>
+                <GitHubIcon className="size-4" /> GitHub
+              </a>
+            </Button>
           </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
 
-          {/* Row 2: Games & Movies (Scroll Right) */}
-          <div className="flex w-max whitespace-nowrap animate-marquee-right marquee-speed-2">
-            {[...Array(6)].map((_, i) => (
-              <div key={`games-movies-${i}`} className="flex gap-3 md:gap-6 px-2 md:px-3 min-w-max">
-                {[...games, ...movies].map((item, idx) => (
-                  <div key={`item-${i}-${idx}`} className="group relative w-48 h-72 flex-shrink-0 cursor-pointer marquee-card">
-                    <Image src={item.img} alt={item.title} fill sizes="(max-width: 767px) 128px, 192px" className="object-cover rounded-sm transition-all duration-500 border border-warm-umber/30" />
-                    <div className="absolute inset-0 bg-pitch-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-sm z-20 marquee-overlay">
-                      <span className="font-label-mono text-sandstone text-center text-sm break-words whitespace-normal">{item.title}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-
-
-
-
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="w-full h-auto py-12 bg-tertiary dark:bg-surface border-t border-outline-variant dark:border-outline relative z-40">
-        <div className="flex flex-col md:flex-row justify-between items-center px-gutter max-w-content-max-width mx-auto gap-8">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <p className="font-body-md text-body-md text-on-surface-variant max-w-sm text-center md:text-left font-label-mono leading-relaxed">
-              Want more info? Please reach out.
-            </p>
-          </div>
-          <nav className="flex flex-wrap justify-center md:justify-end gap-6 md:gap-8 font-label-mono text-label-mono">
-            <a
-              className="text-on-tertiary-container dark:text-on-surface-variant transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2 footer-link"
-              href="https://github.com/BibeshT-TXST"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>GITHUB</span>
-            </a>
-            <a
-              className="text-on-tertiary-container dark:text-on-surface-variant transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2 footer-link"
-              href="https://www.linkedin.com/in/bibesh-timalsina-a7a9482b9/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>LINKEDIN</span>
-            </a>
-            <a
-              className="text-on-tertiary-container dark:text-on-surface-variant transition-transform duration-300 cursor-pointer active:opacity-70 flex items-center gap-2 footer-link"
-              href="mailto:timaslinabibesh747@gmail.com"
-            >
-              <span>GMAIL</span>
-            </a>
-          </nav>
-        </div>
-      </footer>
-    </main>
-  );
+function Footer() {
+  return (
+    <footer className={`${container} flex flex-col gap-2 py-8 text-sm text-muted-foreground sm:flex-row sm:justify-between`}>
+      <p>© {new Date().getFullYear()} {profile.name}</p>
+    </footer>
+  )
 }

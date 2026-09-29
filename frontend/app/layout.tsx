@@ -1,40 +1,47 @@
-import type { Metadata } from "next";
-import { Merriweather } from "next/font/google";
-import "./globals.css";
+import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
 
-const merriweather = Merriweather({
-  variable: "--font-merriwether",
-  subsets: ["latin"],
-  weight: ["300", "400", "700", "900"],
-});
+import { MotionProvider } from "@/components/motion"
+import { Topography } from "@/components/topography"
+import { hero, profile } from "@/lib/content"
+import "./globals.css"
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+
+const description = `${profile.role} in ${profile.location}. ${hero.intro}`
 
 export const metadata: Metadata = {
-  title: "Bibesh Timalsina - Interactive Experience",
-  description: "I build systems from first principles.",
-};
+  metadataBase: new URL("https://www.bibesh-timalsina.me"),
+  title: `${profile.name} · ${profile.role}`,
+  description,
+  openGraph: {
+    title: profile.name,
+    description,
+    url: "/",
+    siteName: profile.name,
+    images: [{ url: "/headshot.jpg", width: 400, height: 400 }],
+    type: "website",
+  },
+  twitter: { card: "summary", title: profile.name, description },
+}
 
-import CustomCursor from "@/components/CustomCursor";
-import InteractiveDots from "@/components/InteractiveDots";
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+}
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark scroll-smooth ${merriweather.variable}`}>
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="antialiased selection:bg-warm-umber selection:text-sandstone">
-        <div className="film-grain"></div>
-        <CustomCursor />
-        <InteractiveDots />
-        {children}
+    <html lang="en" className={inter.variable}>
+      <body>
+        {/* Reveal animations start hidden; without JS, show everything. */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+        <MotionProvider>
+          <Topography />
+          {children}
+        </MotionProvider>
       </body>
     </html>
-  );
+  )
 }
