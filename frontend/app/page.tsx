@@ -111,10 +111,7 @@ function Section({
   return (
     <section id={id} className={`${container} py-16 md:py-24`}>
       <Reveal>
-        <p className="flex items-center gap-3 text-sm font-medium text-muted-foreground">
-          <span className="size-1.5 rounded-full bg-foreground" />
-          {label}
-        </p>
+        <p className="text-sm font-medium text-muted-foreground">{label}</p>
         {title && (
           <h2 className="mt-4 max-w-2xl text-3xl leading-tight font-semibold tracking-tight text-balance md:text-5xl">
             {title}
