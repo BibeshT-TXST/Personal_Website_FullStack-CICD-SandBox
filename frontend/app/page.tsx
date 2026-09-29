@@ -115,9 +115,9 @@ function Section({
     <section id={id} className={`${container} py-16 md:py-24`}>
       {label && title && (
         <Reveal className="mb-10 md:mb-14">
-          {/* One style for every heading: label in ink, comma, the line continues in grey. */}
+          {/* One style for every heading: label, comma, the rest of the line. */}
           <h2 className="max-w-4xl text-3xl leading-tight font-semibold tracking-tight md:text-5xl">
-            {label}, <span className="text-foreground/35">{title}</span>
+            {label}, {title}
           </h2>
         </Reveal>
       )}
@@ -200,7 +200,7 @@ function About() {
     <Reveal>
       <h2 className="text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-6xl">
         {about.values.map((v, i) => (
-          <span key={v} className={cn("block", i > 0 && "text-foreground/30")}>
+          <span key={v} className="block">
             {v}
             {i < about.values.length - 1 && ","}
           </span>
