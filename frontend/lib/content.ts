@@ -143,7 +143,7 @@ export const writing = {
 export const about = {
   values: ["Honor", "Authenticity", "Consistency"],
   body: [
-    "I put those three words at the top of my GitHub, and I try to live up to them in my work. To me they mean being honest about what works and what doesn't, building things the way I said I would, and showing up the next day to make them a little better.",
+    "These words are my guides, and I try to live up to them in my work. To me they mean being honest about what works and what doesn't, building things the way I said I would, and showing up the next day to make them a little better.",
     "When I'm not building, I'm usually outside somewhere old and quiet. A temple, a trail, a tree that's been standing for hundreds of years. Places like that remind me that anything worth building takes time.",
   ],
   education: "B.S. Computer Science and Data Analytics, Texas State University, class of 2027",
