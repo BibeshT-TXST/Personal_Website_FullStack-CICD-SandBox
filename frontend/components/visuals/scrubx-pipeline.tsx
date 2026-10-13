@@ -13,18 +13,17 @@ import { frame, mono, useStepper } from "./shared"
 type Mode = "raw" | "plain" | "detect" | "token"
 
 const steps: { name: string; caption: string; mode: Mode; view: "question" | "decide" | "answer" }[] = [
-  { name: "Receive", caption: "REST API checks auth and role, and tags the request.", mode: "raw", view: "question" },
-  { name: "Normalize", caption: "Unicode cleaned up and markup stripped.", mode: "plain", view: "question" },
-  { name: "Detect", caption: "Regex rules, a semantic scan and a PHI classifier flag 4 fields.", mode: "detect", view: "question" },
-  { name: "Decide", caption: "Risk engine sees no injection signals and allows it.", mode: "detect", view: "decide" },
-  { name: "Tokenize", caption: "Patient details are swapped for tokens.", mode: "token", view: "question" },
-  { name: "Model", caption: "Retrieval is filtered by role and the answer is checked for leaks.", mode: "token", view: "answer" },
-  { name: "Restore", caption: "Tokens are swapped back. The audit log keeps no PHI.", mode: "plain", view: "answer" },
+  { name: "Receive", caption: "The question arrives with the patient record and the clinician's role.", mode: "raw", view: "question" },
+  { name: "Normalize", caption: "Hidden markup, zero width characters and look alike letters are stripped.", mode: "plain", view: "question" },
+  { name: "Detect", caption: "Three checks run at once and flag 3 patient details.", mode: "detect", view: "question" },
+  { name: "Decide", caption: "No attack signals, so the request is allowed through.", mode: "detect", view: "decide" },
+  { name: "Tokenize", caption: "Identifiers become tokens. The real values sit in a vault that lives for one request.", mode: "token", view: "question" },
+  { name: "Model", caption: "Only tokenized text goes out. The answer is checked for leaks and invented tokens.", mode: "token", view: "answer" },
+  { name: "Restore", caption: "Real names go back in. The audit line holds counts, never values.", mode: "plain", view: "answer" },
 ]
 
 const fields = {
   name: { raw: "MARIA LOPEZ", plain: "Maria Lopez", token: "[PATIENT_1]" },
-  age: { raw: "58", plain: "58", token: "[AGE_1]" },
   date: { raw: "03/14/2026", plain: "03/14/2026", token: "[DATE_1]" },
   mrn: { raw: "4410-2291", plain: "4410-2291", token: "[MRN_1]" },
 }
@@ -56,9 +55,8 @@ function Question({ mode }: { mode: Mode }) {
   const tag = (t: string) => mode === "raw" && <span className="text-foreground/35">{t}</span>
   return (
     <p>
-      {tag("<p>")}Patient <Field f={fields.name} mode={mode} />, age <Field f={fields.age} mode={mode} i={1} />, seen{" "}
-      <Field f={fields.date} mode={mode} i={2} />. MRN <Field f={fields.mrn} mode={mode} i={3} />. Blurred vision, type
-      2 diabetes. What should happen next?{tag("</p>")}
+      {tag("<p>")}Patient <Field f={fields.name} mode={mode} />, seen <Field f={fields.date} mode={mode} i={1} />. MRN{" "}
+      <Field f={fields.mrn} mode={mode} i={2} />. Blurred vision, type 2 diabetes. What should happen next?{tag("</p>")}
     </p>
   )
 }
