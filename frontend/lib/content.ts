@@ -42,7 +42,7 @@ export const chapters = {
     since: "Always",
     body: [
       "Most of my own time goes into healthcare projects. SightX screens retinal photos for signs of diabetic eye disease. I trained the model on my laptop, tuned it to lean toward catching disease rather than missing it, and I'm now moving it to AWS one piece at a time.",
-      "Right now I'm also building ScrubX, a gateway that lets hospitals use AI without patient data leaving the building. It swaps out sensitive details before a prompt goes out and puts them back when the answer comes in.",
+      "I also built ScrubX, a gateway that lets a clinician ask an AI about a patient without telling it who the patient is. It swaps out names, dates and record numbers before a prompt goes out, blocks attacks hidden in the record, and puts the real details back when the answer comes in. The first version is live, and I'm now working on V2, which plugs it into SightX on AWS Bedrock.",
       "Outside of that, I build and maintain the website for the Association of Statistics and Analytics, a student club at Texas State. And I write about every step on my blog, including the ones that failed. Those tend to be the most useful posts.",
     ],
   },
@@ -81,13 +81,16 @@ export const projects: Project[] = [
     name: "ScrubX",
     visual: "pipeline",
     kind: "Healthcare · AI security",
-    status: "In progress",
+    status: "V1 live, V2 in progress",
     summary:
-      "Hospitals want to use large language models, but patient data can't leave the building. ScrubX sits in the middle and swaps sensitive details for tokens before a prompt goes out, then puts them back when the answer returns.",
+      "A model can help with a patient without ever learning who that patient is. ScrubX sits between the clinician and the model, swaps names, dates and record numbers for tokens before a prompt goes out, then puts them back when the answer returns.",
     detail:
-      "Every request leaves an audit trail and anything risky is stopped at the gate. Each stage is its own module, so any piece can be swapped out without touching the rest.",
-    stack: ["Python", "LLMs", "Privacy", "Audit logging"],
-    links: [{ label: "View the code", href: "https://github.com/BibeshT-TXST/ScrubX" }],
+      "V1 is live with eight made up patients, and a few of them hide prompt injection traps in their own records, so you can try to break it. Anything risky is blocked before the model is called, every answer is checked for leaks, and the audit log keeps counts, never patient data. V2 brings ScrubX into SightX as a module and moves the model to AWS Bedrock.",
+    stack: ["TypeScript", "Next.js", "Supabase", "Gemini", "Vercel", "AWS Bedrock"],
+    links: [
+      { label: "Try the live demo", href: "https://scrub-x-ivory.vercel.app" },
+      { label: "View the code", href: "https://github.com/BibeshT-TXST/ScrubX" },
+    ],
   },
   {
     name: "GitGud",
